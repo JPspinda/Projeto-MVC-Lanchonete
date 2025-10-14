@@ -1,4 +1,5 @@
 using LanchesMac.Context;
+using LanchesMac.Models;
 using LanchesMac.Repositories;
 using LanchesMac.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //fazendo a injeção de dependências
 builder.Services.AddTransient<ILanchesRepository, LancheRepository>(); // aqui serve para fazer a injeção de dependência automaticamente no projeto, podemos injetar assim as dependências nos controllers
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp)); // aqui estou adicionando o carrinho na sessão do usuário pelo Id, e o AddScoped também serve para que, ao invés de ser o AddTransient, o AddScoped funciona como uma chamada para cada requisição, e não na aplicação em si, no caso quando fizer uma requisição, o Transient lê como sendo igual porqu está na mesma aplicação, agora com o Scoped não, pois ele trata requisições como diferentes para cada sessão
 
 // preciso dessa configuração para configurar as sessions
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
