@@ -8,11 +8,8 @@ namespace LanchesMac.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
+            TempData["Nome"] = "Spinda"; // quando usa o TempData você conegue recuperar o valor apenas uma vez, caso atualize a página, ele some
 
-        public IActionResult Demo()
-        {
             return View();
         }
 
