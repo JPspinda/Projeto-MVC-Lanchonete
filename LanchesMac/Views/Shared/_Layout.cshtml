@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="CarrinhoCompra" asp-action="Index">Carrinho</a>
                         </li>
+                        <li class="nav-item">
+                            @await Component.InvokeAsync("CarrinhoCompraResumo") <!--Componente de visualização-->
+                        </li>
                     </ul>
                 </div>
             </div>
