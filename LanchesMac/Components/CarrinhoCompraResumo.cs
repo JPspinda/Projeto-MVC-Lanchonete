@@ -15,13 +15,13 @@ namespace LanchesMac.Components
 
         public IViewComponentResult Invoke()
         {
-            //var itens = _carrinhoCompra.GetCarrinhoCompraItens(); //Aqui estou pegando os itens do carrinho de compras
+            var itens = _carrinhoCompra.GetCarrinhoCompraItens(); //Aqui estou pegando os itens do carrinho de compras
 
-            var itens = new List<CarrinhoCompraItem>()
-            {
-                new CarrinhoCompraItem(),
-                new CarrinhoCompraItem()
-            };
+            //var itens = new List<CarrinhoCompraItem>()
+            //{
+            //    new CarrinhoCompraItem(),
+            //    new CarrinhoCompraItem()
+            //};
 
             _carrinhoCompra.CarrinhoCompraItens = itens; //Aqui estou atribuindo os itens que peguei do carrinho de compras para a propriedade CarrinhoCompraItens da própria classe CarrinhoCompra
 

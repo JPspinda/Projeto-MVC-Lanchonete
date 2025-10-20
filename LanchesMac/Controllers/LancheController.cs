@@ -47,20 +47,25 @@ namespace LanchesMac.Controllers
             }
             else
             {
-                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase)) // o Equals compara duas strings, o OrdinalIgnoreCase faz com que a comparação não seja case sensitive
-                {
-                    lanches = _lanchesRepository.Lanches
-                        .Where(l => l.Categoria.categoriaNome.Equals("Normal")) // o Where é usado para fazer filtros em coleções
-                        .OrderBy(l => l.Nome);
-                    categoriaAtual = "Lanches Normais";
-                }
-                else
-                {
-                    lanches = _lanchesRepository.Lanches
-                        .Where(l => l.Categoria.categoriaNome.Equals("Natural"))
-                        .OrderBy(l => l.Nome);
-                    categoriaAtual = "Lanches Naturais";
-                }
+                //if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase)) // o Equals compara duas strings, o OrdinalIgnoreCase faz com que a comparação não seja case sensitive
+                //{
+                //    lanches = _lanchesRepository.Lanches
+                //        .Where(l => l.Categoria.categoriaNome.Equals("Normal")) // o Where é usado para fazer filtros em coleções
+                //        .OrderBy(l => l.Nome);
+                //    categoriaAtual = "Lanches Normais";
+                //}
+                //else
+                //{
+                //    lanches = _lanchesRepository.Lanches
+                //        .Where(l => l.Categoria.categoriaNome.Equals("Natural"))
+                //        .OrderBy(l => l.Nome);
+                //    categoriaAtual = "Lanches Naturais";
+                //}
+                lanches = _lanchesRepository.Lanches
+                    .Where(l => l.Categoria.categoriaNome.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(l => l.Nome);
+
+                categoriaAtual = categoria;
             }
 
             var lancheListViewModel = new LancheListViewModel
@@ -70,6 +75,13 @@ namespace LanchesMac.Controllers
             };
 
             return View(lancheListViewModel);
+        }
+
+        public IActionResult Details(int lancheId)
+        {
+            var lanche = _lanchesRepository.Lanches
+                .FirstOrDefault(l => l.lancheId == lancheId);
+            return View(lanche);
         }
     }
 }

@@ -24,8 +24,8 @@
                         <td class="text-left">@item.Lanche.Nome</td>
                         <td class="text-right">@item.Lanche.Preco.ToString("c")</td>
                         <td class="text-center">
-                            <a asp-controller="CarrinhoCompra" asp-action="RemoverItemDoCarrinhoCompra"
-                               asp-route="@item.Lanche.lancheId"><button type="button" class="btn btn-danger">Apagar</button></a>
+                            <a class="btn btn-danger" asp-controller="CarrinhoCompra" asp-action="RemoverItemDoCarrinhoCompra"
+                               asp-route-lancheId="@item.Lanche.lancheId">Apagar</a>
                         </td>
                     </tr>
                 }

@@ -14,31 +14,20 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LanchesMac</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Lanche" asp-action="List">Lanches</a>
-                        </li> *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CarrinhoCompra" asp-action="Index">Carrinho</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a>
-                        </li>
-                        <li class="nav-item">
-                            @await Component.InvokeAsync("CarrinhoCompraResumo") <!--Componente de visualização, dentro do parênteses eu passo o nome da Component e da pasta, geralmente é sempre o mesmo nome, por isso apenas 1-->
-                        </li>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a></li>
                         <li class="nav-item">
                             @await Component.InvokeAsync("CategoriaMenu") <!--Componente de visualização, dentro do parênteses eu passo o nome da Component e da pasta, geralmente é sempre o mesmo nome, por isso apenas 1-->
                         </li>
                     </ul>
+                    <li class="nav-item d-flex">
+                        @await Component.InvokeAsync("CarrinhoCompraResumo") <!--Componente de visualização, dentro do parênteses eu passo o nome da Component e da pasta, geralmente é sempre o mesmo nome, por isso apenas 1-->
+                    </li>
                 </div>
             </div>
         </nav>
