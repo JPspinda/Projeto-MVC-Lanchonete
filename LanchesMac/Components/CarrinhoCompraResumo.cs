@@ -15,7 +15,7 @@ namespace LanchesMac.Components
 
         public IViewComponentResult Invoke()
         {
-            //var itens = _carrinhoCompra.GetCarrinhoCompraItens();
+            //var itens = _carrinhoCompra.GetCarrinhoCompraItens(); //Aqui estou pegando os itens do carrinho de compras
 
             var itens = new List<CarrinhoCompraItem>()
             {
@@ -23,15 +23,15 @@ namespace LanchesMac.Components
                 new CarrinhoCompraItem()
             };
 
-            _carrinhoCompra.CarrinhoCompraItens = itens;
+            _carrinhoCompra.CarrinhoCompraItens = itens; //Aqui estou atribuindo os itens que peguei do carrinho de compras para a propriedade CarrinhoCompraItens da própria classe CarrinhoCompra
 
-            var carrinhoCompraVM = new CarrinhoCompraViewModel
+            var carrinhoCompraVM = new CarrinhoCompraViewModel //Aqui estou criando o ViewModel do carrinho de compras
             {
                 CarrinhoCompra = _carrinhoCompra,
                 CarrinhoCompraTotal = _carrinhoCompra.GetCompraCarrinhoTotal()
             };
 
-            return View(carrinhoCompraVM);
+            return View(carrinhoCompraVM); //Aqui estou retornando a View do componente com o carrinho de compras
         }
     }
 }

@@ -43,10 +43,15 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-app.MapControllerRoute(
+app.MapControllerRoute( // aqui estou definindo o padrão da rota para filtrar os lanches por categoria ao invés de ficar utilizando o ?categoria=natural na url
+    name: "categoriaFiltro",
+    pattern: "Lanche/{action}/{categoria?}",
+    defaults: new { Controller = "Lanche", action = "List" })
+    .WithStaticAssets();
+
+app.MapControllerRoute( // aqui é um padão de rota para as controllers, eles são praticamente parâmetros que são passados pela url para definir qual controller e ação serão chamadas
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();
