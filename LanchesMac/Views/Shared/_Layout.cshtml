@@ -7,6 +7,7 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" asp-append-version="true" />
     <link rel="stylesheet" href="~/LanchesMac.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -28,6 +29,13 @@
                     <li class="nav-item d-flex">
                         @await Component.InvokeAsync("CarrinhoCompraResumo") <!--Componente de visualização, dentro do parênteses eu passo o nome da Component e da pasta, geralmente é sempre o mesmo nome, por isso apenas 1-->
                     </li>
+                    <li class="nav-item d-flex">
+                        <form class="navbar-form navbar-right" asp-controller="Lanche" asp-action="Search" method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Procurar produto" name="searchString" value="@ViewData["searchString"]">
+                            </div>
+                        </form>
+                    </li>
                 </div>
             </div>
         </nav>
@@ -38,11 +46,8 @@
         </main>
     </div>
 
-    <footer class="footer bg-body-tertiary text-center text-lg-start navbar-fixed-bottom">
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2025 Copyright:
-            <a class="text-body" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-        </div>
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website @DateTime.Now.Year</p></div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
