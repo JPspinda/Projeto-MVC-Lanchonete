@@ -20,29 +20,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a></li>
-                        <li class="nav-item">
-                            @await Component.InvokeAsync("CategoriaMenu") <!--Componente de visualização, dentro do parênteses eu passo o nome da Component e da pasta, geralmente é sempre o mesmo nome, por isso apenas 1-->
-                        </li>
-                        <li class="nav-item">
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Área do Admin</a>
-                            }
-                        </li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminLanches" asp-action="Index">Produtos</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminCategorias" asp-action="Index">Categorias</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminPedidos" asp-action="Index">Pedidos</a></li>
                     </ul>
-                    <li class="nav-item d-flex">
-                        @await Component.InvokeAsync("CarrinhoCompraResumo") <!--Componente de visualização, dentro do parênteses eu passo o nome da Component e da pasta, geralmente é sempre o mesmo nome, por isso apenas 1-->
-                    </li>
-                    <li class="nav-item d-flex">
-                        <form class="navbar-form navbar-right" asp-controller="Lanche" asp-action="Search" method="get">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Procurar produto" name="searchString" value="@ViewData["searchString"]">
-                            </div>
-                        </form>
-                    </li>
-                    @await Html.PartialAsync("_LoginPartial") <!--Aqui é carregado o login partial-->
                 </div>
             </div>
         </nav>
@@ -168,7 +150,6 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <!-- Footer -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

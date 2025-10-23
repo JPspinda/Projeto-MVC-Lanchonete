@@ -2,6 +2,7 @@ using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repositories;
 using LanchesMac.Repositories.Interfaces;
+using LanchesMac.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,10 +34,19 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddTransient<ILanchesRepository, LancheRepository>(); // aqui serve para fazer a injeção de dependência automaticamente no projeto, podemos injetar assim as dependências nos controllers
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>(); // aqui estou fazendo a injeção de dependência para o serviço de inicialização de usuários e papéis
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp)); // aqui estou adicionando o carrinho na sessão do usuário pelo Id, e o AddScoped também serve para que, ao invés de ser o AddTransient, o AddScoped funciona como uma chamada para cada requisição, e não na aplicação em si, no caso quando fizer uma requisição, o Transient lê como sendo igual porqu está na mesma aplicação, agora com o Scoped não, pois ele trata requisições como diferentes para cada sessão
 
 // preciso dessa configuração para configurar as sessions
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole("Admin");
+    }); // aqui estou criando uma política de autorização chamada "Admin" que exige que o usuário tenha o papel de "Admin"
+});
 
 //configurando as sessions na program
 builder.Services.AddMemoryCache();
@@ -55,6 +65,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+CriarPerfisUsuario(app); // aqui estou chamando o método para criar os papéis e usuários iniciais
+
 app.UseSession();
 
 app.UseAuthentication();
@@ -62,6 +74,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllerRoute( // aqui estou definindo o padrão da rota para filtrar os lanches por categoria ao invés de ficar utilizando o ?categoria=natural na url
     name: "categoriaFiltro",
@@ -74,10 +90,15 @@ app.MapControllerRoute( // aqui é um padão de rota para as controllers, eles são
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapAreaControllerRoute(
-    name: "areas",
-    areaName: "Admin", // Adicione o nome da área aqui, por exemplo "Admin"
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
-
 app.Run();
+
+void CriarPerfisUsuario(WebApplication app) // aqui estou chamando o método para criar os papéis e usuários iniciais
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>(); // aqui estou criando um escopo para o serviço
+    using (var scope = scopedFactory.CreateScope()) // aqui estou criando o escopo
+    {
+        var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>(); // aqui estou obtendo o serviço de inicialização de usuários e papéis
+        service.SeedRoles(); // aqui estou chamando o método para criar os papéis
+        service.SeedUsers(); // aqui estou chamando o método para criar os usuários
+    }
+}
