@@ -1,34 +1,47 @@
 ﻿@model LoginViewModel
 
-<section class="vh-100">
-    <div class="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                     class="img-fluid" alt="Sample image">
-            </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form asp-controller="Account" asp-action="Register" method="post">
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<section class="vh-100 bg-dark d-flex align-items-center justify-content-center">
+    <div class="container py-5">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8 col-lg-6 col-xl-4">
+                <form asp-controller="Account" asp-action="Register" method="post" class="bg-secondary bg-opacity-10 border-light shadow-lg p-4 rounded-4">
                     <input type="hidden" asp-for="ReturnUrl" />
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" asp-for="UserName"></label>
-                        <input asp-for="UserName" class="form-control form-control-lg" />
+
+                    <div class="text-center mb-4">
+                        <h2 class="text-light fw-bold">Registrar Conta</h2>
+                        <p class="text-muted">Crie sua conta para continuar</p>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label text-warning" asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control form-control-lg bg-dark text-light border-secondary" />
                         <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <label class="form-label" asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control form-control-lg" />
+                    <div class="form-outline mb-4">
+                        <label class="form-label text-warning" asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control form-control-lg bg-dark text-light border-secondary" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
-                    <div class="text-center text-lg-start mt-4 pt-2">
-                        <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
-                               style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Registrar">
+                    <div class="text-center mt-4">
+                        <input type="submit" class="btn btn-success btn-lg w-100" value="Registrar">
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="text-light">
+                            Já tem uma conta?
+                            <a asp-controller="Account" asp-action="Login" class="text-warning text-decoration-none">Entrar</a>
+                        </p>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
 

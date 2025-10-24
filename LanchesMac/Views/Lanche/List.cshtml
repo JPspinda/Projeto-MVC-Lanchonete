@@ -9,17 +9,18 @@
 <h3>@ViewBag.Total @ViewBag.TotalLanches</h3>
 <hr /> *@
 
-<div>
-    <h2>@Model.CategoriaAtual</h2>
-</div>
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-warning display-6">@Model.CategoriaAtual</h2>
+        <hr class="border-secondary opacity-50 w-25 mx-auto" />
+    </div>
 
-@*<h3>@TempData["Nome"];</h3>*@
+    @*<h3>@TempData["Nome"];</h3>*@
 
-<div class="container text-center">
-    <div class="row align-items-center">
+    <div class="row g-4 justify-content-center">
         @foreach (var lanche in Model.Lanches)
         {
-            <partial name="_LanchesResumo" for="@lanche"/> <!--No caso deste for="" estou falando para pegar os dados da variável lanche-->
+                <partial name="_LanchesResumo" for="@lanche" /> <!--No caso deste for="" estou falando para pegar os dados da variável lanche-->
         }
     </div>
 </div>

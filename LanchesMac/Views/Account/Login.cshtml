@@ -1,33 +1,42 @@
 ﻿@model LoginViewModel
 
-<section class="vh-100">
-    <div class="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<section class="vh-100 d-flex align-items-center justify-content-center bg-dark text-light">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 420px; width: 100%; background-color: #1e1e1e;">
+        <div class="card-body p-5">
+
+            <div class="text-center mb-4">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                     class="img-fluid" alt="Sample image">
+                     class="img-fluid rounded mb-3" alt="Login Illustration" style="max-width: 200px;">
+                <h3 class="fw-bold text-warning">Entrar na sua conta</h3>
+                <p class="text-secondary">Bem-vindo de volta! Faça login para continuar.</p>
             </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form asp-controller="Account" asp-action="Login" method="post">
-                    <input type="hidden" asp-for="ReturnUrl" />
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" asp-for="UserName"></label>
-                        <input asp-for="UserName" class="form-control form-control-lg" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
-                    </div>
 
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <label class="form-label" asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control form-control-lg" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
+            <form asp-controller="Account" asp-action="Login" method="post">
+                <input type="hidden" asp-for="ReturnUrl" />
 
-                    <div class="text-center text-lg-start mt-4 pt-2">
-                        <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Login">
-                    </div>
-                </form>
-            </div>
+                <!-- Campo Usuário -->
+                <div class="form-outline mb-4">
+                    <label class="form-label text-warning" asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control form-control-lg bg-dark text-light border-secondary rounded-3" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <!-- Campo Senha -->
+                <div class="form-outline mb-4">
+                    <label class="form-label text-warning" asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control form-control-lg bg-dark text-light border-secondary rounded-3" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <!-- Botão de Login -->
+                <div class="d-grid mt-4">
+                    <input type="submit" class="btn btn-success btn-lg fw-semibold rounded-3" value="Entrar">
+                </div>
+            </form>
         </div>
     </div>
 </section>

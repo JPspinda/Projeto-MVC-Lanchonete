@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,23 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminPedidos
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Pedidos.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
         {
-            return View(await _context.Pedidos.ToListAsync());
+            var resultado = _context.Pedidos.AsNoTracking().AsQueryable(); //IQueryable para permitir filtros dinâmicos
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.Nome.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome"); //os paraâmetros são: fonte de dados, qtd de itens por página, página atual, campo de ordenação, ordenação padrão
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } }; //preserva o filtro na paginação
+            return View(model);
         }
 
         // GET: Admin/AdminPedidos/Details/5

@@ -2,12 +2,19 @@
 
 @* <partial name="_Carousel" />  *@
 
-<h2>Os preferidos da semana</h2>
-<h4>Tá com fome???</h4>
+<section class="py-5 text-light bg-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-warning">🍔 Os preferidos da semana</h2>
+            <h4 class="text-secondary">Tá com fome??? Então confere nossos lanches mais pedidos!</h4>
+            <hr class="mx-auto mt-3 mb-4" style="width: 120px; border-top: 3px solid #ffc107;">
+        </div>
 
-<div class="row">
-    @foreach (var lanche in Model.LanchesPreferidos)
-    {
-        <partial name="_LanchesResumo" for="@lanche" />
-    }
-</div>
+        <div class="row g-4 justify-content-center">
+            @foreach (var lanche in Model.LanchesPreferidos)
+            {
+                <partial name="_LanchesResumo" for="@lanche" />
+            }
+        </div>
+    </div>
+</section>

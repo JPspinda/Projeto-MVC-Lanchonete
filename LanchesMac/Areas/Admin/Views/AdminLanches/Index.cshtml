@@ -1,83 +1,63 @@
 ﻿@model IEnumerable<LanchesMac.Models.Lanche>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lanches";
 }
 
-<h1>Index</h1>
+<section class="vh-100 bg-dark text-light py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-warning">Gerenciar Lanches</h2>
+            <a asp-action="Create" class="btn btn-success fw-semibold">
+                <i class="bi bi-plus-circle me-2"></i> Novo Lanche
+            </a>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DescricaoCurta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DescricaoDetalhada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagemUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagemThumbbailUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsLanchePreferido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmEstoque)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescricaoCurta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescricaoDetalhada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Preco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagemUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagemThumbbailUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsLanchePreferido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmEstoque)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Descricao)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.lancheId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.lancheId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.lancheId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle rounded-3 overflow-hidden shadow-sm">
+                <thead class="table-secondary text-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.DescricaoCurta)</th>
+                        <th>@Html.DisplayNameFor(model => model.DescricaoDetalhada)</th>
+                        <th>@Html.DisplayNameFor(model => model.Preco)</th>
+                        <th>@Html.DisplayNameFor(model => model.ImagemUrl)</th>
+                        <th>@Html.DisplayNameFor(model => model.ImagemThumbbailUrl)</th>
+                        <th>@Html.DisplayNameFor(model => model.IsLanchePreferido)</th>
+                        <th>@Html.DisplayNameFor(model => model.EmEstoque)</th>
+                        <th>@Html.DisplayNameFor(model => model.Categoria)</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DescricaoCurta)</td>
+                            <td class="text-truncate" style="max-width: 200px;">@Html.DisplayFor(modelItem => item.DescricaoDetalhada)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Preco)</td>
+                            <td class="text-truncate" style="max-width: 150px;">@Html.DisplayFor(modelItem => item.ImagemUrl)</td>
+                            <td class="text-truncate" style="max-width: 150px;">@Html.DisplayFor(modelItem => item.ImagemThumbbailUrl)</td>
+                            <td>@Html.DisplayFor(modelItem => item.IsLanchePreferido)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EmEstoque)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Categoria.Descricao)</td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.lancheId" class="btn btn-outline-warning btn-sm me-1">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.lancheId" class="btn btn-outline-info btn-sm me-1">
+                                    <i class="bi bi-eye"></i> Detalhes
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.lancheId" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -1,95 +1,82 @@
-﻿@model IEnumerable<LanchesMac.Models.Pedido>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<LanchesMac.Models.Pedido>;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pedidos";
 }
 
-<h1>Index</h1>
+<section class="bg-dark text-light py-5 min-vh-100">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-warning">Gerenciar Pedidos</h2>
+            <a asp-action="Create" class="btn btn-success fw-semibold">
+                <i class="bi bi-plus-circle me-2"></i> Criar Novo Pedido
+            </a>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sobrenome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Endereco1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Endereco2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cep)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PedidoEnviado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PedidoEntregueEm)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sobrenome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Endereco1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Endereco2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cep)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PedidoEnviado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PedidoEntregueEm)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PedidoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PedidoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PedidoId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <form method="get" class="row g-2 mb-4">
+            <div class="col-md-8">
+                <input name="filter"
+                       class="form-control bg-dark text-light border-secondary"
+                       placeholder="Filtrar pedidos..."
+                       value="@Model.RouteValue["Filter"]" />
+            </div>
+            <div class="col-md-4 d-grid">
+                <button type="submit" class="btn btn-outline-warning fw-semibold">
+                    <i class="bi bi-search me-1"></i> Procurar
+                </button>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle rounded-3 overflow-hidden shadow-sm">
+                <thead class="table-secondary text-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.Sobrenome)</th>
+                        <th>@Html.DisplayNameFor(model => model.Endereco1)</th>
+                        <th>@Html.DisplayNameFor(model => model.Endereco2)</th>
+                        <th>@Html.DisplayNameFor(model => model.Cep)</th>
+                        <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                        <th>@Html.DisplayNameFor(model => model.Cidade)</th>
+                        <th>@Html.DisplayNameFor(model => model.Telefone)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.PedidoEnviado)</th>
+                        <th>@Html.DisplayNameFor(model => model.PedidoEntregueEm)</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Sobrenome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Endereco1)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Endereco2)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Cep)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Estado)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Cidade)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PedidoEnviado)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PedidoEntregueEm)</td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.PedidoId" class="btn btn-outline-warning btn-sm me-1">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.PedidoId" class="btn btn-outline-info btn-sm me-1">
+                                    <i class="bi bi-eye"></i> Detalhes
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.PedidoId" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+

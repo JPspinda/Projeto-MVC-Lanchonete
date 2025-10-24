@@ -6,11 +6,19 @@ using LanchesMac.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddPaging(options =>
+{
+    options.ViewName = "Bootstrap4"; // aqui estou definindo o tema do Bootstrap 4 para a paginação
+    options.PageParameterName = "pageindex"; // aqui estou definindo o nome do parâmetro da página na URL
+});
+
 // fazendo a conexão com o banco de dados
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Essa configuração é para estabelecer a conexão da aplicação com o banco de dados informado no Json
@@ -50,7 +58,12 @@ builder.Services.AddAuthorization(options =>
 
 //configurando as sessions na program
 builder.Services.AddMemoryCache();
-builder.Services.AddSession();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(7); // por exemplo
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
