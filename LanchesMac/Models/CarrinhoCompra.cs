@@ -17,6 +17,9 @@ namespace LanchesMac.Models
 
         public static CarrinhoCompra GetCarrinho(IServiceProvider services)
         {
+            var httpAccessor = services.GetRequiredService<IHttpContextAccessor>();
+            var httpContext = httpAccessor.HttpContext;
+
             //define um sessão
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
 
@@ -24,7 +27,19 @@ namespace LanchesMac.Models
             var context = services.GetService<AppDbContext>();
 
             //obtem ou gera o id do carrinho
-            string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
+            string userId = httpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            string carrinhoId;
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                carrinhoId = userId;
+                // opcional: quando entrar como user, mesclar o carrinho anônimo para esse user (chamar método de merge externamente)
+            }
+            else
+            {
+                carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
+                session.SetString("CarrinhoId", carrinhoId);
+            }
 
             //atribui o id do carrinho na sessão
             session.SetString("CarrinhoId", carrinhoId);

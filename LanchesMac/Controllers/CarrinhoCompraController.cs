@@ -32,8 +32,10 @@ namespace LanchesMac.Controllers
         }
 
         [Authorize]
-        public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
+        public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId, Guid UserId)
         {
+            var userId = UserId;
+
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.lancheId == lancheId);
             if (lancheSelecionado != null)
             {
