@@ -1,35 +1,38 @@
 ﻿@model LanchesMac.Models.Categoria
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Criar Categoria";
 }
 
-<h1>Create</h1>
+<section class="bg-dark text-light py-5 min-vh-100">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-warning">Cadastrar Nova Categoria</h2>
+            <a asp-action="Index" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> Voltar à Lista
+            </a>
+        </div>
 
-<h4>Categoria</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="categoriaNome" class="control-label"></label>
-                <input asp-for="categoriaNome" class="form-control" />
-                <span asp-validation-for="categoriaNome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
-                <span asp-validation-for="Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="card bg-secondary bg-opacity-25 border-0 shadow-lg rounded-4 p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="categoriaNome" class="form-label fw-semibold text-warning"></label>
+                    <input asp-for="categoriaNome" class="form-control bg-dark text-light border-secondary" />
+                    <span asp-validation-for="categoriaNome" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Descricao" class="form-label fw-semibold text-warning"></label>
+                    <input asp-for="Descricao" class="form-control bg-dark text-light border-secondary" />
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <input type="submit" value="Criar" class="btn btn-success fw-semibold px-4" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</section>

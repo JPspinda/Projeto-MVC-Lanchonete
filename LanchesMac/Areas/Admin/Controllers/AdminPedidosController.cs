@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Routing;
 using ReflectionIT.Mvc.Paging;
 using System;
 using System.Collections.Generic;
@@ -24,22 +25,18 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminPedidos
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Pedidos.ToListAsync());
-        //}
-
-        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
+        public async Task<IActionResult> Index(string filter, int page = 1, string sort = "Nome")
         {
-            var resultado = _context.Pedidos.AsNoTracking().AsQueryable(); //IQueryable para permitir filtros dinâmicos
+            var resultado = _context.Pedidos.AsNoTracking().AsQueryable(); // o asnotracking serve para melhorar a performance, pois não preciso rastrear as mudanças nesse caso e o asqueryable serve para permitir consultas dinâmicas
 
             if (!string.IsNullOrWhiteSpace(filter))
             {
                 resultado = resultado.Where(p => p.Nome.Contains(filter));
             }
 
-            var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome"); //os paraâmetros são: fonte de dados, qtd de itens por página, página atual, campo de ordenação, ordenação padrão
-            model.RouteValue = new RouteValueDictionary { { "filter", filter } }; //preserva o filtro na paginação
+            var model = await PagingList.CreateAsync(resultado, 5, page, sort, "Nome");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } }; // usar "filter" minúsculo
+
             return View(model);
         }
 

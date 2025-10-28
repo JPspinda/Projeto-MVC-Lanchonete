@@ -1,71 +1,87 @@
 ﻿@model LanchesMac.Models.Lanche
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Lanche";
 }
 
-<h1>Edit</h1>
+<section class="bg-dark text-light py-5 min-vh-100">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-warning">Editar Lanche</h2>
+            <a asp-action="Index" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> Voltar à Lista
+            </a>
+        </div>
 
-<h4>Lanche</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="lancheId" />
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescricaoCurta" class="control-label"></label>
-                <input asp-for="DescricaoCurta" class="form-control" />
-                <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescricaoDetalhada" class="control-label"></label>
-                <input asp-for="DescricaoDetalhada" class="form-control" />
-                <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" class="form-control" />
-                <span asp-validation-for="Preco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemUrl" class="control-label"></label>
-                <input asp-for="ImagemUrl" class="form-control" />
-                <span asp-validation-for="ImagemUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemThumbbailUrl" class="control-label"></label>
-                <input asp-for="ImagemThumbbailUrl" class="form-control" />
-                <span asp-validation-for="ImagemThumbbailUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsLanchePreferido" /> @Html.DisplayNameFor(model => model.IsLanchePreferido)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EmEstoque" /> @Html.DisplayNameFor(model => model.EmEstoque)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
-                <span asp-validation-for="CategoriaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="card bg-secondary bg-opacity-25 border-0 shadow-lg rounded-4 p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="lancheId" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Nome" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="Nome" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Preco" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="Preco" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="Preco" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DescricaoCurta" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="DescricaoCurta" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DescricaoDetalhada" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="DescricaoDetalhada" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ImagemUrl" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="ImagemUrl" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="ImagemUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ImagemThumbbailUrl" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="ImagemThumbbailUrl" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="ImagemThumbbailUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="CategoriaId" class="form-label text-warning fw-semibold"></label>
+                        <select asp-for="CategoriaId" class="form-select bg-dark text-light border-secondary" asp-items="ViewBag.CategoriaId"></select>
+                        <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <div class="form-check">
+                            <input class="form-check-input bg-dark border-warning" asp-for="IsLanchePreferido" />
+                            <label class="form-check-label text-light fw-semibold">
+                                @Html.DisplayNameFor(model => model.IsLanchePreferido)
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input bg-dark border-warning" asp-for="EmEstoque" />
+                            <label class="form-check-label text-light fw-semibold">
+                                @Html.DisplayNameFor(model => model.EmEstoque)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4 gap-2">
+                    <input type="submit" value="Salvar" class="btn btn-success fw-semibold px-4" />
+                    <a asp-action="Index" class="btn btn-outline-light px-4">Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</section>
