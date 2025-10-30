@@ -25,16 +25,16 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminPedidos
-        public async Task<IActionResult> Index(string filter, int page = 1, string sort = "Nome")
+        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
         {
             var resultado = _context.Pedidos.AsNoTracking().AsQueryable(); // o asnotracking serve para melhorar a performance, pois não preciso rastrear as mudanças nesse caso e o asqueryable serve para permitir consultas dinâmicas
 
             if (!string.IsNullOrWhiteSpace(filter))
             {
-                resultado = resultado.Where(p => p.Nome.Contains(filter));
+                resultado = resultado.Where(p => p.Nome.Contains(filter)); // aqui é como funciona a pesquisa
             }
 
-            var model = await PagingList.CreateAsync(resultado, 5, page, sort, "Nome");
+            var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } }; // usar "filter" minúsculo
 
             return View(model);
