@@ -47,7 +47,7 @@ namespace LanchesMac.Controllers
                 precoTotalPedido += (item.Lanche.Preco * item.Quantidade);
             }
 
-            //atribuir os valores obtidos ao pedido
+            //atribuir os valores obtidos ao pedido 
             pedido.TotalItensPedido = totalItensPedido;
             pedido.PedidoTotal = precoTotalPedido;
 

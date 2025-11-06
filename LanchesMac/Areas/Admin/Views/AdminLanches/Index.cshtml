@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LanchesMac.Models.Lanche>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<LanchesMac.Models.Lanche>
 
 @{
     ViewData["Title"] = "Lanches";
@@ -11,6 +11,25 @@
             <a asp-action="Create" class="btn btn-success fw-semibold">
                 <i class="bi bi-plus-circle me-2"></i> Novo Lanche
             </a>
+        </div>
+
+        <form method="get" class="row g-2 mb-4">
+            <div class="col-md-8">
+                <input name="filter"
+                       class="form-control bg-dark text-light border-warning"
+                       placeholder="Filtrar pedidos..."
+                       value="@Model.RouteValue["filter"]" />
+            </div>
+            <div class="col-md-4 d-grid">
+                <button type="submit" class="btn btn-outline-warning fw-semibold">
+                    <i class="bi bi-search me-1"></i> Procurar
+                </button>
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-between mb-3">
+            <span class="text-warning fw-bold">Total de pedidos: @Model.TotalRecordCount</span>
+            <vc:pager paging-list="@Model" />
         </div>
 
         <div class="table-responsive">

@@ -34,7 +34,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 resultado = resultado.Where(p => p.Nome.Contains(filter)); // aqui é como funciona a pesquisa
             }
 
-            var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome");
+            var model = await PagingList.CreateAsync(resultado, 10, pageindex, sort, "Nome");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } }; // usar "filter" minúsculo
 
             return View(model);
