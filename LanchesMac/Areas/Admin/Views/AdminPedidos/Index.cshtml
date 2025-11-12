@@ -68,16 +68,18 @@
                             <td>@item.PedidoEnviado</td>
                             <td>@item.PedidoEntregueEm</td>
                             <td class="text-center">
-                                <a asp-action="Edit" asp-route-id="@item.PedidoId" class="btn btn-outline-warning btn-sm me-1">
+                                <a asp-action="Edit" asp-route-id="@item.PedidoId" class="btn btn-outline-warning btn-sm me-1" title="Editar">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a asp-action="Details" asp-route-id="@item.PedidoId" class="btn btn-outline-info btn-sm me-1">
+                                <a asp-action="Details" asp-route-id="@item.PedidoId" class="btn btn-outline-info btn-sm me-1" title="Detalhes">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.PedidoId" class="btn btn-outline-danger btn-sm">
+                                <a asp-action="Delete" asp-route-id="@item.PedidoId" class="btn btn-outline-danger btn-sm me-1" title="Excluir">
                                     <i class="bi bi-trash"></i>
                                 </a>
-                                <a asp-action="PedidoLanches" asp-route-id="@item.PedidoId">Ver Itens</a>
+                                <a asp-action="PedidoLanches" asp-route-id="@item.PedidoId" class="btn btn-outline-success btn-sm" title="Ver Itens">
+                                    <i class="bi bi-bag-check"></i>
+                                </a>
                             </td>
                         </tr>
                     }
