@@ -83,7 +83,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nome", lanche.CategoriaId);
+            
             return View(lanche);
         }
 

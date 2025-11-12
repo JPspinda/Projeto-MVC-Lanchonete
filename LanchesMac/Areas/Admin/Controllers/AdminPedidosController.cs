@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LanchesMac.ViewModels;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
@@ -22,6 +23,27 @@ namespace LanchesMac.Areas.Admin.Controllers
         public AdminPedidosController(AppDbContext context)
         {
             _context = context;
+        }
+
+        public IActionResult PedidoLanches(int? id)
+        {
+            var pedido = _context.Pedidos
+                .Include(p => p.PedidoItens)
+                .ThenInclude(p => p.Lanche)
+                .FirstOrDefault(p => p.PedidoId == id);
+
+            if(pedido == null)
+            {
+                return View("PedidoNotFound", id.Value);
+            }
+
+            PedidoLancheViewModel pedidoLanches = new PedidoLancheViewModel()
+            {
+                Pedido = pedido,
+                PedidoDetalhes = pedido.PedidoItens
+            };
+
+            return View(pedidoLanches);
         }
 
         // GET: Admin/AdminPedidos
