@@ -4,51 +4,88 @@
     ViewData["Title"] = "Detalhes do Lanche";
 }
 
-<div class="container mt-4">
-    <div class="card shadow p-4">
-        <h2 class="mb-4 text-primary">Detalhes do Lanche</h2>
-        <hr />
+<section class="bg-dark text-light py-5 min-vh-100">
+    <div class="container">
+        <div class="card bg-secondary text-light shadow-lg border-0 rounded-4 p-4 mx-auto" style="max-width: 900px;">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-warning mb-3 mb-md-0">
+                    <i class="bi bi-info-circle me-2"></i> Detalhes do Lanche
+                </h2>
+                <a asp-action="Index" class="btn btn-outline-light fw-semibold">
+                    <i class="bi bi-arrow-left"></i> Voltar à Lista
+                </a>
+            </div>
+            <hr class="border-warning opacity-50 mb-4" />
 
-        <dl class="row">
-            <dt class="col-sm-3 fw-bold">Nome</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Nome)</dd>
+            <div class="row g-4 align-items-center">
+                <!-- Imagem principal -->
+                <div class="col-md-5 text-center">
+                    <img src="@Model.ImagemUrl" alt="@Model.Nome"
+                         class="img-fluid rounded-4 shadow"
+                         style="max-height: 250px; object-fit: cover;" />
+                    <div class="mt-3">
+                        <img src="@Model.ImagemThumbbailUrl" alt="@Model.Nome"
+                             class="img-thumbnail rounded shadow-sm"
+                             style="max-width: 120px;" />
+                    </div>
+                </div>
 
-            <dt class="col-sm-3 fw-bold">Descrição Curta</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.DescricaoCurta)</dd>
+                <!-- Informações -->
+                <div class="col-md-7">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 fw-bold text-warning">Nome</dt>
+                        <dd class="col-sm-8">@Model.Nome</dd>
 
-            <dt class="col-sm-3 fw-bold">Descrição Detalhada</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.DescricaoDetalhada)</dd>
+                        <dt class="col-sm-4 fw-bold text-warning">Descrição Curta</dt>
+                        <dd class="col-sm-8">@Model.DescricaoCurta</dd>
 
-            <dt class="col-sm-3 fw-bold">Preço</dt>
-            <dd class="col-sm-9">R$ @Html.DisplayFor(model => model.Preco)</dd>
+                        <dt class="col-sm-4 fw-bold text-warning">Descrição Detalhada</dt>
+                        <dd class="col-sm-8">@Model.DescricaoDetalhada</dd>
 
-            <dt class="col-sm-3 fw-bold">Imagem</dt>
-            <dd class="col-sm-9">
-                <img src="@Model.ImagemUrl" alt="@Model.Nome" class="img-thumbnail" style="max-width: 200px;" />
-            </dd>
+                        <dt class="col-sm-4 fw-bold text-warning">Preço</dt>
+                        <dd class="col-sm-8 fs-5 fw-bold text-success">R$ @Model.Preco.ToString("N2")</dd>
 
-            <dt class="col-sm-3 fw-bold">Imagem Thumbnail</dt>
-            <dd class="col-sm-9">
-                <img src="@Model.ImagemThumbbailUrl" alt="@Model.Nome" class="img-thumbnail" style="max-width: 150px;" />
-            </dd>
+                        <dt class="col-sm-4 fw-bold text-warning">Lanche Preferido</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.IsLanchePreferido)
+                            {
+                                <span class="badge bg-success">Sim</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Não</span>
+                            }
+                        </dd>
 
-            <dt class="col-sm-3 fw-bold">Lanche Preferido</dt>
-            <dd class="col-sm-9">
-                @(Model.IsLanchePreferido ? "Sim" : "Não")
-            </dd>
+                        <dt class="col-sm-4 fw-bold text-warning">Em Estoque</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.EmEstoque)
+                            {
+                                <span class="badge bg-success">Disponível</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Esgotado</span>
+                            }
+                        </dd>
 
-            <dt class="col-sm-3 fw-bold">Em Estoque</dt>
-            <dd class="col-sm-9">
-                @(Model.EmEstoque ? "Sim" : "Não")
-            </dd>
+                        <dt class="col-sm-4 fw-bold text-warning">Categoria</dt>
+                        <dd class="col-sm-8">@Model.Categoria?.categoriaNome</dd>
+                    </dl>
+                </div>
+            </div>
 
-            <dt class="col-sm-3 fw-bold">Categoria</dt>
-            <dd class="col-sm-9">@Model.Categoria?.Descricao</dd>
-        </dl>
+            <hr class="border-secondary mt-4" />
 
-        <div class="mt-4">
-            <a asp-action="Edit" asp-route-id="@Model?.lancheId" class="btn btn-warning me-2">Editar</a>
-            <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+            <div class="d-flex flex-wrap justify-content-end gap-2 mt-3">
+                <a asp-action="Edit" asp-route-id="@Model?.lancheId"
+                   class="btn btn-outline-warning fw-semibold">
+                    <i class="bi bi-pencil-square me-1"></i> Editar
+                </a>
+                <a asp-action="Index" class="btn btn-outline-light fw-semibold">
+                    <i class="bi bi-list-ul me-1"></i> Voltar à Lista
+                </a>
+            </div>
         </div>
     </div>
-</div>
+</section>

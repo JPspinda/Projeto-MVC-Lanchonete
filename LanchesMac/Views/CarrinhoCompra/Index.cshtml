@@ -1,72 +1,96 @@
-﻿@model CarrinhoCompraViewModel;
+﻿@model CarrinhoCompraViewModel
+
+@{
+    ViewData["Title"] = "Carrinho";
+}
 
 <div class="container my-5">
     <div class="p-5 bg-dark text-light rounded-4 shadow-lg border border-secondary">
+        <!-- Título -->
         <div class="text-center mb-4">
             <h2 class="fw-bold text-warning mb-2">
-                <i class="bi bi-cart4 me-2"></i>Seu Carrinho de Compras
+                <i class="bi bi-cart4 me-2"></i> Seu Carrinho de Compras
             </h2>
             <hr class="border-secondary opacity-50 w-25 mx-auto" />
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-dark table-striped align-middle text-center">
-                <thead class="table-dark border-bottom border-secondary">
-                    <tr class="text-warning">
-                        <th scope="col">Quantidade</th>
-                        <th scope="col">Lanche</th>
-                        <th scope="col" class="text-end">Preço</th>
-                        <th scope="col" class="text-end">Subtotal</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var item in Model.CarrinhoCompra.CarrinhoCompraItens)
-                    {
-                        <tr>
-                            <td class="text-center fw-semibold">@item.Quantidade</td>
-                            <td class="text-start">@item.Lanche.Nome</td>
-                            <td class="text-end text-success">@item.Lanche.Preco.ToString("c")</td>
-                            <td class="text-end text-success fw-semibold">@((item.Lanche.Preco * item.Quantidade).ToString("c"))</td>
-                            <td class="text-center">
-                                <a class="btn btn-sm btn-outline-danger fw-semibold"
-                                   asp-controller="CarrinhoCompra"
-                                   asp-action="RemoverItemDoCarrinhoCompra"
-                                   asp-route-lancheId="@item.Lanche.lancheId">
-                                    <i class="bi bi-trash3-fill me-1"></i> Apagar
-                                </a>
-                            </td>
+        <!-- Tabela -->
+        @if (Model.CarrinhoCompra.CarrinhoCompraItens.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle text-center border-secondary">
+                    <thead class="border-bottom border-secondary">
+                        <tr class="text-warning text-uppercase small">
+                            <th scope="col">Qtd</th>
+                            <th scope="col" class="text-start">Lanche</th>
+                            <th scope="col" class="text-end">Preço</th>
+                            <th scope="col" class="text-end">Subtotal</th>
+                            <th scope="col"></th>
                         </tr>
-                    }
-                </tbody>
+                    </thead>
 
-                <tfoot class="border-top border-secondary">
-                    <tr>
-                        <td colspan="3" class="text-end fw-bold text-warning">Total:</td>
-                        <td class="text-end fw-bold text-success">
-                            @Model.CarrinhoCompraTotal.ToString("c")
-                        </td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+                    <tbody>
+                        @foreach (var item in Model.CarrinhoCompra.CarrinhoCompraItens)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@item.Quantidade</td>
+                                <td class="text-start">@item.Lanche.Nome</td>
+                                <td class="text-end text-success">@item.Lanche.Preco.ToString("c")</td>
+                                <td class="text-end text-success fw-semibold">
+                                    @((item.Lanche.Preco * item.Quantidade).ToString("c"))
+                                </td>
+                                <td class="text-center">
+                                    <a asp-controller="CarrinhoCompra"
+                                       asp-action="RemoverItemDoCarrinhoCompra"
+                                       asp-route-lancheId="@item.Lanche.lancheId"
+                                       class="btn btn-sm btn-outline-danger fw-semibold px-3 rounded-pill">
+                                        <i class="bi bi-trash3-fill me-1"></i> Apagar
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
 
-        <div class="d-flex justify-content-end gap-3 mt-4">
-            <a class="btn btn-success btn-lg fw-semibold shadow-sm"
-               asp-controller="Pedido"
-               asp-action="Checkout">
-                <i class="bi bi-bag-check-fill me-1"></i> Encerrar pedido
-            </a>
+                    <tfoot class="border-top border-secondary">
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold text-warning">Total:</td>
+                            <td class="text-end fw-bold text-success">
+                                @Model.CarrinhoCompraTotal.ToString("c")
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
 
-            &nbsp;&nbsp;&nbsp;
+            <!-- Botões -->
+            <div class="d-flex justify-content-end flex-wrap gap-3 mt-4">
+                <a asp-controller="Pedido"
+                   asp-action="Checkout"
+                   class="btn btn-success btn-lg fw-semibold rounded-pill shadow-sm px-4 py-2">
+                    <i class="bi bi-bag-check-fill me-2"></i> Encerrar Pedido
+                </a>
 
-            <a class="btn btn-outline-warning btn-lg fw-semibold shadow-sm"
-               asp-controller="Lanche"
-               asp-action="List">
-                <i class="bi bi-arrow-left-circle me-1"></i> Continuar comprando
-            </a>
-        </div>
+                <a asp-controller="Lanche"
+                   asp-action="List"
+                   class="btn btn-outline-warning btn-lg fw-semibold rounded-pill shadow-sm px-4 py-2">
+                    <i class="bi bi-arrow-left-circle me-2"></i> Continuar Comprando
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-emoji-frown display-4 text-secondary mb-3"></i>
+                <h4 class="text-warning">Seu carrinho está vazio</h4>
+                <p class="text-muted mb-4">Adicione alguns lanches deliciosos para continuar.</p>
+
+                <a asp-controller="Lanche"
+                   asp-action="List"
+                   class="btn btn-outline-warning btn-lg fw-semibold rounded-pill px-4">
+                    <i class="bi bi-arrow-left-circle me-2"></i> Ver Lanches
+                </a>
+            </div>
+        }
     </div>
 </div>

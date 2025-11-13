@@ -2,40 +2,57 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    ViewData["Title"] = "Registrar";
+
 }
 
 <section class="vh-100 bg-dark d-flex align-items-center justify-content-center">
     <div class="container py-5">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-8 col-lg-6 col-xl-4">
-                <form asp-controller="Account" asp-action="Register" method="post" class="bg-secondary bg-opacity-10 border-light shadow-lg p-4 rounded-4">
+                <form asp-controller="Account" asp-action="Register" method="post"
+                      class="bg-secondary bg-opacity-10 border border-warning-subtle shadow-lg p-5 rounded-4 animate-fade">
+
                     <input type="hidden" asp-for="ReturnUrl" />
 
+                    <!-- Cabeçalho -->
                     <div class="text-center mb-4">
-                        <h2 class="text-light fw-bold">Registrar Conta</h2>
-                        <p class="text-muted">Crie sua conta para continuar</p>
+                        <h2 class="text-warning fw-bold">Criar Conta</h2>
+                        <p class="text-light-50">Preencha os campos abaixo para começar</p>
+                        <hr class="border-warning opacity-50 w-50 mx-auto" />
                     </div>
 
+                    <!-- Usuário -->
                     <div class="form-outline mb-4">
-                        <label class="form-label text-warning" asp-for="UserName"></label>
-                        <input asp-for="UserName" class="form-control form-control-lg bg-dark text-light border-secondary" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <label class="form-label text-warning fw-semibold" asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
+                               placeholder="Digite seu nome de usuário" />
+                        <span asp-validation-for="UserName" class="text-danger small"></span>
                     </div>
 
+                    <!-- Senha -->
                     <div class="form-outline mb-4">
-                        <label class="form-label text-warning" asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control form-control-lg bg-dark text-light border-secondary" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <label class="form-label text-warning fw-semibold" asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
+                               placeholder="Crie sua senha" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
 
+                    <!-- Botão -->
                     <div class="text-center mt-4">
-                        <input type="submit" class="btn btn-success btn-lg w-100" value="Registrar">
+                        <button type="submit" class="btn btn-warning btn-lg w-100 fw-semibold shadow-sm transition">
+                            Registrar
+                        </button>
                     </div>
 
-                    <div class="text-center mt-3">
+                    <!-- Link de login -->
+                    <div class="text-center mt-4">
                         <p class="text-light">
                             Já tem uma conta?
-                            <a asp-controller="Account" asp-action="Login" class="text-warning text-decoration-none">Entrar</a>
+                            <a asp-controller="Account" asp-action="Login"
+                               class="text-warning text-decoration-none fw-semibold hover-underline">
+                                Entrar
+                            </a>
                         </p>
                     </div>
                 </form>
@@ -44,4 +61,40 @@
     </div>
 </section>
 
+<style>
+    /* Animação suave ao carregar */
+    .animate-fade {
+        animation: fadeIn 0.8s ease-in-out;
+    }
 
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Efeito de foco nos inputs */
+    .focus-ring:focus {
+        border-color: #ffc107 !important;
+        box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);
+        transition: 0.3s;
+    }
+
+    /* Efeito de hover no botão */
+    .transition:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(255, 193, 7, 0.4);
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* Subtile hover underline no link */
+    .hover-underline:hover {
+        text-decoration: underline;
+    }
+</style>

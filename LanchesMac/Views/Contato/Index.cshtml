@@ -1,25 +1,37 @@
-﻿<div class="container my-5">
+﻿@{
+    ViewData["Title"] = "Contato";
+}
+
+<div class="container my-5">
     <div class="p-5 bg-dark text-light rounded-4 shadow-lg border border-secondary">
-        <div class="text-center mb-4">
-            <h2 class="fw-bold text-warning mb-3">📣 Queremos ouvir o que você tem a dizer</h2>
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-warning mb-3">
+                <i class="bi bi-chat-dots-fill me-2"></i>Queremos ouvir você
+            </h2>
             <p class="text-secondary fs-5">
-                Se você tiver alguma dúvida ou sugestão, fale conosco!
+                Tem alguma dúvida, sugestão ou feedback? Entre em contato conosco!
             </p>
         </div>
 
         <div class="text-center">
-            <h5 class="mb-3">
-                <!--Aqui estou utilizando a TagHelper criada, neste caso as suas propriedades são passadas dentro da classe de uma forma nomeada-->
-                <email endereco="jaopedrospinda@gmail.com" conteudo="Enviar um E-mail"></email>
-            </h5>
+            <div class="mb-4">
+                <!-- TagHelper personalizada -->
+                <email endereco="jaopedrospinda@gmail.com" conteudo="📧 Enviar um E-mail"></email>
+            </div>
 
-            <h5 class="text-warning mb-2">
-                <i class="bi bi-telephone-fill me-2"></i>(11) 99999-9999
-            </h5>
+            <div class="mb-3">
+                <h5 class="text-warning fw-semibold">
+                    <i class="bi bi-telephone-fill me-2"></i>(11) 99999-9999
+                </h5>
+            </div>
 
-            <h5 class="text-secondary">
-                <i class="bi bi-geo-alt-fill me-2"></i>Av. Juscelino Kubitschek, 1000 - 03492-112 - São Paulo
-            </h5>
+            <div>
+                <h6 class="text-secondary fw-normal">
+                    <i class="bi bi-geo-alt-fill me-2"></i>
+                    Av. Juscelino Kubitschek, 1000<br />
+                    03492-112 — São Paulo, SP
+                </h6>
+            </div>
         </div>
     </div>
 </div>

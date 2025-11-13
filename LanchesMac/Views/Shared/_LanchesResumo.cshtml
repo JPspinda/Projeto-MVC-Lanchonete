@@ -1,32 +1,71 @@
-﻿@model Lanche;
+﻿@model Lanche
 
-<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-    <div class="card h-100 bg-dark text-light border-0 shadow-sm">
-        <img src="@Model.ImagemUrl" class="card-img-top img-fluid rounded-top" alt="@Model.Nome" />
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+    <div class="card lanche-card bg-secondary bg-opacity-25 text-light border-0 shadow-lg rounded-4 w-100 overflow-hidden">
+        <div class="position-relative">
+            <img src="@Model.ImagemUrl"
+                 class="card-img-top img-fluid rounded-top lanche-img"
+                 alt="@Model.Nome" />
+            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2 px-3 py-2 fw-semibold shadow-sm">
+                R$ @Model.Preco.ToString("F2")
+            </span>
+        </div>
 
-        <div class="card-body d-flex flex-column justify-content-between">
+        <div class="card-body d-flex flex-column justify-content-between p-3">
             <div>
-                <h5 class="card-title fw-bold text-warning mb-2">
+                <h5 class="card-title fw-bold text-warning mb-2 text-truncate">
                     <a asp-controller="Lanche"
                        asp-action="Details"
                        asp-route-lancheId="@Model.lancheId"
-                       class="text-decoration-none text-warning d-flex align-items-center">
+                       class="text-decoration-none text-warning hover-glow">
                         <i class="bi bi-eye me-2"></i> @Model.Nome
                     </a>
                 </h5>
-                <p class="card-text text-secondary small mb-2">@Model.DescricaoCurta</p>
+
+                <p class="card-text text-secondary small mb-3 text-truncate-2">
+                    @Model.DescricaoCurta
+                </p>
             </div>
 
-            <div>
-                <h4 class="fw-semibold mb-3">Preço: <span class="text-success">@Model.Preco.ToString("c")</span></h4>
-                <a class="btn btn-outline-warning w-100 fw-semibold"
-                   id="cartButton"
-                   asp-controller="CarrinhoCompra"
-                   asp-action="AdicionarItemNoCarrinhoCompra"
-                   asp-route-lancheId="@Model.lancheId">
-                    <i class="bi bi-cart-plus me-1"></i> Incluir no carrinho
-                </a>
-            </div>
+            <a class="btn btn-outline-warning w-100 fw-semibold mt-auto rounded-pill"
+               asp-controller="CarrinhoCompra"
+               asp-action="AdicionarItemNoCarrinhoCompra"
+               asp-route-lancheId="@Model.lancheId">
+                <i class="bi bi-cart-plus me-1"></i> Adicionar ao carrinho
+            </a>
         </div>
     </div>
 </div>
+
+<style>
+    .lanche-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .lanche-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.25);
+        }
+
+    .lanche-img {
+        transition: transform 0.4s ease;
+        object-fit: cover;
+        height: 200px;
+        width: 100%;
+    }
+
+    .lanche-card:hover .lanche-img {
+        transform: scale(1.05);
+    }
+
+    .text-truncate-2 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .hover-glow:hover {
+        text-shadow: 0 0 8px rgba(255, 193, 7, 0.8);
+    }
+</style>

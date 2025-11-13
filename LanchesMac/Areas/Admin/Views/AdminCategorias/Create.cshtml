@@ -6,33 +6,101 @@
 
 <section class="bg-dark text-light py-5 min-vh-100">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Cabeçalho -->
+        <div class="d-flex justify-content-between align-items-center mb-4 animate-fade">
             <h2 class="fw-bold text-warning">Cadastrar Nova Categoria</h2>
-            <a asp-action="Index" class="btn btn-outline-light">
+            <a asp-action="Index" class="btn btn-outline-light fw-semibold shadow-sm animate-btn">
                 <i class="bi bi-arrow-left"></i> Voltar à Lista
             </a>
         </div>
 
-        <div class="card bg-secondary bg-opacity-25 border-0 shadow-lg rounded-4 p-4">
-            <form asp-action="Create">
+        <!-- Card -->
+        <div class="card bg-secondary bg-opacity-25 border-0 shadow-lg rounded-4 p-4 animate-slide">
+            <form asp-action="Create" autocomplete="off">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                <div class="mb-3">
+                <!-- Campo Nome -->
+                <div class="mb-4">
                     <label asp-for="categoriaNome" class="form-label fw-semibold text-warning"></label>
-                    <input asp-for="categoriaNome" class="form-control bg-dark text-light border-secondary" />
+                    <input asp-for="categoriaNome" class="form-control bg-dark text-light border-secondary focus-glow" placeholder="Digite o nome da categoria" />
                     <span asp-validation-for="categoriaNome" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3">
+                <!-- Campo Descrição -->
+                <div class="mb-4">
                     <label asp-for="Descricao" class="form-label fw-semibold text-warning"></label>
-                    <input asp-for="Descricao" class="form-control bg-dark text-light border-secondary" />
+                    <textarea asp-for="Descricao" rows="3" class="form-control bg-dark text-light border-secondary focus-glow" placeholder="Descreva brevemente a categoria"></textarea>
                     <span asp-validation-for="Descricao" class="text-danger"></span>
                 </div>
 
+                <!-- Botão -->
                 <div class="d-flex justify-content-end mt-4">
-                    <input type="submit" value="Criar" class="btn btn-success fw-semibold px-4" />
+                    <button type="submit" class="btn btn-success fw-semibold px-5 shadow-sm animate-btn">
+                        <i class="bi bi-plus-circle me-1"></i> Criar
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </section>
+
+<!-- Estilos personalizados -->
+<style>
+    /* Animações suaves */
+    .animate-fade {
+        animation: fadeIn 0.6s ease-in;
+    }
+
+    .animate-slide {
+        animation: slideUp 0.7s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    }
+
+    @@keyframes slideUp {
+        from
+
+    {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    }
+
+    /* Foco elegante nos campos */
+    .focus-glow:focus {
+        border-color: #ffc107 !important;
+        box-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Botão com efeito de destaque */
+    .animate-btn {
+        transition: all 0.25s ease-in-out;
+    }
+
+        .animate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+        }
+
+        .animate-btn:active {
+            transform: scale(0.97);
+        }
+</style>

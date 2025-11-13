@@ -1,87 +1,67 @@
 ﻿@model LanchesMac.Models.Pedido
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Excluir Pedido";
 }
 
-<h1>Delete</h1>
+<section class="bg-dark text-light py-5 min-vh-100">
+    <div class="container">
+        <div class="card bg-secondary bg-opacity-25 border border-secondary shadow-lg rounded-4 p-5 mx-auto" style="max-width: 800px;">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-danger">
+                    <i class="bi bi-trash3-fill me-2"></i>Excluir Pedido
+                </h2>
+                <p class="text-warning mb-0">Tem certeza de que deseja excluir este pedido?</p>
+                <hr class="border-danger opacity-50 w-25 mx-auto mt-3" />
+            </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sobrenome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sobrenome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Endereco1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Endereco2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PedidoEnviado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PedidoEnviado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PedidoEntregueEm)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PedidoEntregueEm)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="PedidoId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+            <dl class="row mb-4">
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Nome)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Nome)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Sobrenome)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Sobrenome)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Endereco1)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Endereco1)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Endereco2)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Endereco2)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Cep)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Cep)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Estado)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Estado)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Cidade)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Cidade)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Telefone)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Telefone)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.Email)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.PedidoEnviado)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PedidoEnviado)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-warning">@Html.DisplayNameFor(model => model.PedidoEntregueEm)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PedidoEntregueEm)</dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="PedidoId" />
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-outline-warning fw-semibold px-4">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Voltar à Lista
+                    </a>
+                    <button type="submit" class="btn btn-danger fw-semibold px-4 shadow-sm">
+                        <i class="bi bi-trash-fill me-1"></i> Excluir Pedido
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

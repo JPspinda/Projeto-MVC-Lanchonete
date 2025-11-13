@@ -1,14 +1,23 @@
-﻿@model Lanche;
+﻿@model Lanche
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
 
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="card bg-dark text-light border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="card bg-dark text-light border-0 shadow-lg rounded-4 overflow-hidden animate-fade">
 
+                <!-- Imagem do Lanche -->
                 <div class="text-center bg-secondary bg-opacity-25 p-4">
-                    <img src="@Model.ImagemUrl" class="img-fluid rounded-3 shadow-sm" alt="@Model.Nome" style="max-height: 350px; object-fit: cover;">
+                    <img src="@Model.ImagemUrl"
+                         class="img-fluid rounded-3 shadow-sm lanche-img"
+                         alt="@Model.Nome"
+                         style="max-height: 350px; object-fit: cover;">
                 </div>
 
+                <!-- Corpo -->
                 <div class="card-body p-5">
                     <h2 class="card-title fw-bold text-warning text-center mb-3">@Model.Nome</h2>
                     <hr class="border-secondary opacity-50 w-25 mx-auto mb-4" />
@@ -18,21 +27,24 @@
                     </p>
 
                     <div class="text-center mb-4">
-                        <h4 class="fw-semibold">Preço: <span class="text-success">@Model.Preco.ToString("c")</span></h4>
+                        <h4 class="fw-semibold">
+                            Preço: <span class="text-success">@Model.Preco.ToString("c")</span>
+                        </h4>
                     </div>
 
-                    <div class="d-flex justify-content-center gap-3">
+                    <!-- Botões -->
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
                         <a asp-controller="Lanche" asp-action="List"
-                           class="btn btn-outline-warning btn-lg fw-semibold shadow-sm">
+                           class="btn btn-outline-warning btn-lg fw-semibold shadow-sm animate-btn">
                             <i class="bi bi-arrow-left-circle me-1"></i> Ver todos os lanches
                         </a>
 
-                        <a class="btn btn-success btn-lg fw-semibold shadow-sm"
+                        <a class="btn btn-success btn-lg fw-semibold shadow-sm animate-btn"
                            id="cartButton"
                            asp-controller="CarrinhoCompra"
                            asp-action="AdicionarItemNoCarrinhoCompra"
                            asp-route-lancheId="@Model.lancheId">
-                            <i class="bi bi-cart-plus me-1"></i> Adicionar @Model.Nome no carrinho
+                            <i class="bi bi-cart-plus me-1"></i> Adicionar @Model.Nome
                         </a>
                     </div>
                 </div>
@@ -40,3 +52,52 @@
         </div>
     </div>
 </div>
+
+<!-- Estilos -->
+<style>
+    /* Efeito de entrada */
+    .animate-fade {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    @@keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Zoom suave na imagem ao passar o mouse */
+    .lanche-img {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+        .lanche-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 193, 7, 0.25);
+        }
+
+    /* Botões animados */
+    .animate-btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+        .animate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+    /* Efeito de clique no botão de carrinho */
+    #cartButton:active {
+        transform: scale(0.97);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    }
+</style>

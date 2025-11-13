@@ -39,7 +39,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 resultado = resultado.Where(l => l.Nome.Contains(filter));
             }
 
-            var model = await PagingList.CreateAsync(resultado, 5, pageIndex, sort, "Nome");
+            var model = await PagingList.CreateAsync(resultado, 10, pageIndex, sort, "Nome");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
         }
@@ -66,7 +66,7 @@ namespace LanchesMac.Areas.Admin.Controllers
         // GET: Admin/AdminLanches/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nome");
+            ViewBag.CategoriaId = new SelectList(_context.Categorias, "CategoriaId", "categoriaNome");
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
+            ViewBag.CategoriaId = new SelectList(_context.Categorias, "CategoriaId", "categoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 
@@ -100,7 +100,7 @@ namespace LanchesMac.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Descricao", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "categoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 
@@ -136,7 +136,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Descricao", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "categoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 

@@ -4,70 +4,111 @@
     ViewData["Title"] = "Cadastrar Lanche";
 }
 
-<div class="container mt-4">
-    <div class="card shadow p-4">
-        <h2 class="mb-4">Cadastrar Novo Lanche</h2>
-        <hr />
+<section class="bg-dark text-light py-5 min-vh-100">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-warning">Cadastrar Novo Lanche</h2>
+            <a asp-action="Index" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> Voltar à Lista
+            </a>
+        </div>
 
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="card bg-secondary bg-opacity-25 border-0 shadow-lg rounded-4 p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="mb-3">
-                <label asp-for="Nome" class="form-label">Nome do Lanche</label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label asp-for="Nome" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="Nome" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="DescricaoCurta" class="form-label">Descrição Curta</label>
-                <input asp-for="DescricaoCurta" class="form-control" />
-                <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
-            </div>
+                    <div class="col-md-6">
+                        <label asp-for="Preco" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="Preco" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="Preco" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="DescricaoDetalhada" class="form-label">Descrição Detalhada</label>
-                <textarea asp-for="DescricaoDetalhada" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
-            </div>
+                    <div class="col-md-6">
+                        <label asp-for="DescricaoCurta" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="DescricaoCurta" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="Preco" class="form-label">Preço</label>
-                <input asp-for="Preco" class="form-control" />
-                <span asp-validation-for="Preco" class="text-danger"></span>
-            </div>
+                    <div class="col-md-6">
+                        <label asp-for="DescricaoDetalhada" class="form-label text-warning fw-semibold"></label>
+                        <textarea asp-for="DescricaoDetalhada" class="form-control bg-dark text-light border-secondary" rows="3"></textarea>
+                        <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="ImagemUrl" class="form-label">URL da Imagem</label>
-                <input asp-for="ImagemUrl" class="form-control" />
-                <span asp-validation-for="ImagemUrl" class="text-danger"></span>
-            </div>
+                    <div class="col-md-6">
+                        <label asp-for="ImagemUrl" class="form-label text-warning fw-semibold"></label>
+                        <input asp-for="ImagemUrl" id="imagemUrl" class="form-control bg-dark text-light border-secondary" placeholder="Insira a URL da imagem" />
+                        <span asp-validation-for="ImagemUrl" class="text-danger"></span>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="ImagemThumbbailUrl" class="form-label">URL da Miniatura</label>
-                <input asp-for="ImagemThumbbailUrl" class="form-control" />
-                <span asp-validation-for="ImagemThumbbailUrl" class="text-danger"></span>
-            </div>
+                    <!-- Pré-visualização da imagem -->
+                    <div class="col-md-6 text-center">
+                        <label class="form-label text-warning fw-semibold">Pré-visualização da Imagem</label>
+                        <div class="border border-secondary rounded-3 p-3 bg-dark bg-opacity-50">
+                            <img id="previewImagem" src="#" alt="Prévia" class="img-fluid rounded-3 shadow-sm d-none" style="max-height: 200px;" />
+                            <p id="semImagem" class="text-secondary fst-italic mt-3">Nenhuma imagem disponível</p>
+                        </div>
+                    </div>
 
-            <div class="form-check mb-2">
-                <input class="form-check-input" asp-for="IsLanchePreferido" />
-                <label class="form-check-label">Lanche Preferido</label>
-            </div>
+                    <div class="col-md-6">
+                        <label asp-for="CategoriaId" class="form-label text-warning fw-semibold"></label>
+                        <select asp-for="CategoriaId" class="form-select bg-dark text-light border-secondary" asp-items="ViewBag.CategoriaId"></select>
+                        <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                    </div>
 
-            <div class="form-check mb-3">
-                <input class="form-check-input" asp-for="EmEstoque" />
-                <label class="form-check-label">Disponível em Estoque</label>
-            </div>
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <div class="form-check">
+                            <input class="form-check-input bg-dark border-warning" asp-for="IsLanchePreferido" />
+                            <label class="form-check-label text-light fw-semibold">
+                                @Html.DisplayNameFor(model => model.IsLanchePreferido)
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input bg-dark border-warning" asp-for="EmEstoque" />
+                            <label class="form-check-label text-light fw-semibold">
+                                @Html.DisplayNameFor(model => model.EmEstoque)
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="CategoriaId" class="form-label">Categoria</label>
-                <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.CategoriaId"></select>
-                <span asp-validation-for="CategoriaId" class="text-danger"></span>
-            </div>
-
-            <div class="d-flex justify-content-between">
-                <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
-            </div>
-        </form>
+                <div class="d-flex justify-content-end mt-4 gap-2">
+                    <button type="submit" class="btn btn-success fw-semibold px-4">
+                        <i class="bi bi-check-circle me-1"></i> Cadastrar
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-light px-4">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</section>
+
+@section Scripts {
+    <script>
+        const inputImagem = document.getElementById("imagemUrl");
+        const preview = document.getElementById("previewImagem");
+        const semImagem = document.getElementById("semImagem");
+
+        inputImagem.addEventListener("input", () => {
+            const url = inputImagem.value.trim();
+            if (url) {
+                preview.src = url;
+                preview.classList.remove("d-none");
+                semImagem.classList.add("d-none");
+            } else {
+                preview.src = "#";
+                preview.classList.add("d-none");
+                semImagem.classList.remove("d-none");
+            }
+        });
+    </script>
+}

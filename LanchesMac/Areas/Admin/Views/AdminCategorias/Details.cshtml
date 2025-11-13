@@ -6,38 +6,69 @@
 
 <section class="bg-dark text-light py-5 min-vh-100">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold text-warning">Detalhes da Categoria</h2>
-            <a asp-action="Index" class="btn btn-outline-light">
-                <i class="bi bi-arrow-left"></i> Voltar à Lista
-            </a>
+        <!-- Cabeçalho -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-warning mb-3 mb-md-0">
+                <i class="bi bi-info-circle me-2"></i> Detalhes da Categoria
+            </h2>
         </div>
 
+        <!-- Card de detalhes -->
         <div class="card bg-secondary bg-opacity-25 border-0 shadow-lg rounded-4 p-4">
             <dl class="row mb-0">
                 <dt class="col-sm-3 fw-semibold text-warning">
                     @Html.DisplayNameFor(model => model.categoriaNome)
                 </dt>
-                <dd class="col-sm-9">
+                <dd class="col-sm-9 text-light">
                     @Html.DisplayFor(model => model.categoriaNome)
                 </dd>
 
                 <dt class="col-sm-3 fw-semibold text-warning mt-3">
                     @Html.DisplayNameFor(model => model.Descricao)
                 </dt>
-                <dd class="col-sm-9 mt-3">
+                <dd class="col-sm-9 mt-3 text-light">
                     @Html.DisplayFor(model => model.Descricao)
                 </dd>
             </dl>
         </div>
 
-        <div class="d-flex justify-content-end mt-4">
-            <a asp-action="Edit" asp-route-id="@Model?.CategoriaId" class="btn btn-warning fw-semibold me-2">
-                <i class="bi bi-pencil-square"></i> Editar
+        <!-- Botões -->
+        <div class="d-flex justify-content-end mt-4 gap-2 flex-wrap">
+            <a asp-action="Edit" asp-route-id="@Model?.CategoriaId" class="btn btn-warning fw-semibold px-4 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-pencil-square me-1"></i> Editar
             </a>
-            <a asp-action="Index" class="btn btn-outline-light fw-semibold">
-                <i class="bi bi-list"></i> Voltar à Lista
+            <a asp-action="Index" class="btn btn-outline-light fw-semibold px-4 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-list me-1"></i> Voltar à Lista
             </a>
         </div>
     </div>
 </section>
+
+<style>
+    .card {
+        backdrop-filter: blur(6px);
+        transition: all 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.25);
+        }
+
+    dt {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    dd {
+        font-size: 1.05rem;
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+</style>

@@ -1,43 +1,73 @@
 ﻿@model Pedido
 
-<div class="container mt-4">
-    <div class="jumbotron bg-dark text-light p-4 rounded">
-        <h2 class="text-warning">@ViewBag.CheckoutCompletoMensagem</h2>
+@{
+    ViewData["Title"] = "Pedido Finalizado";
+}
+
+<div class="container my-5">
+    <!-- Cabeçalho -->
+    <div class="bg-dark text-light p-5 rounded-4 shadow-lg border border-secondary text-center">
+        <h2 class="fw-bold text-warning mb-2">@ViewBag.CheckoutCompletoMensagem</h2>
+        <p class="text-secondary mb-0">Confira abaixo os detalhes do seu pedido 👇</p>
     </div>
 
-    <div class="card bg-dark text-light border-0 shadow-sm mt-3">
+    <!-- Informações do pedido -->
+    <div class="card bg-dark text-light border-0 shadow-lg mt-4 rounded-4">
         <div class="card-body">
-            <p>Cliente: <strong class="text-warning">@Model.Nome</strong></p>
-            <p>Data do pedido: <strong class="text-warning">@Model.PedidoEnviado</strong></p>
-            <p>Número do pedido: <strong class="text-warning">@Model.PedidoId</strong></p>
+            <div class="row mb-3">
+                <div class="col-md-4 col-sm-12 mb-2">
+                    <p class="mb-0 text-secondary">Cliente:</p>
+                    <p class="fw-semibold text-warning">@Model.Nome</p>
+                </div>
 
-            <table class="table table-dark table-striped mt-3">
-                <thead class="table-warning text-dark">
-                    <tr>
-                        <th>Quantidade</th>
-                        <th>Lanche</th>
-                        <th>Preço</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.PedidoItens)
-                    {
+                <div class="col-md-4 col-sm-12 mb-2">
+                    <p class="mb-0 text-secondary">Data do Pedido:</p>
+                    <p class="fw-semibold text-warning">@Model.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+
+                <div class="col-md-4 col-sm-12 mb-2">
+                    <p class="mb-0 text-secondary">Número do Pedido:</p>
+                    <p class="fw-semibold text-warning">@Model.PedidoId</p>
+                </div>
+            </div>
+
+            <!-- Tabela de itens -->
+            <div class="table-responsive mt-4">
+                <table class="table table-dark table-hover align-middle shadow-sm rounded overflow-hidden">
+                    <thead class="table-warning text-dark">
                         <tr>
-                            <td>@item.Quantidade</td>
-                            <td>@item.Lanche.Nome</td>
-                            <td class="text-success">@item.Lanche.Preco.ToString("c")</td>
+                            <th class="text-center">Quantidade</th>
+                            <th>Lanche</th>
+                            <th class="text-end">Preço</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PedidoItens)
+                        {
+                            <tr>
+                                <td class="text-center">@item.Quantidade</td>
+                                <td>@item.Lanche.Nome</td>
+                                <td class="text-end text-success fw-semibold">@item.Lanche.Preco.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
-            <h4 class="mt-3">Valor total do pedido: <strong class="text-success">@(((decimal)ViewBag.TotalPedido).ToString("C1"))</strong></h4>
+            <!-- Total -->
+            <div class="text-end mt-4">
+                <h4 class="fw-bold text-light">
+                    Total do pedido:
+                    <span class="text-success">@(((decimal)ViewBag.TotalPedido).ToString("C"))</span>
+                </h4>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="form-group text-center mt-4">
-    <h3>
-        <a asp-controller="Home" asp-action="Index" class="nav-link text-info">Retornar</a>
-    </h3>
+    <!-- Botão de retorno -->
+    <div class="text-center mt-5">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-info btn-lg fw-semibold px-5 py-2 rounded-pill shadow-sm">
+            <i class="bi bi-house-door me-2"></i> Retornar à Página Inicial
+        </a>
+    </div>
 </div>
