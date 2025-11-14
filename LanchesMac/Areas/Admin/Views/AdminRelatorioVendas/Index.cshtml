@@ -1,0 +1,49 @@
+﻿<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <form asp-action="RelatorioVendasSimples"
+              class="p-4 rounded-4 shadow-lg bg-dark text-light border border-warning border-2">
+            <fieldset>
+
+                <legend class="fw-bold text-center mb-4 text-warning">
+                    <i class="bi bi-calendar-range me-2"></i>
+                    Relatório de Pedidos por Período
+                </legend>
+
+                <!-- Data Inicial -->
+                <div class="mb-4">
+                    <label for="minDate"
+                           class="form-label fw-semibold text-warning">
+                        Data Inicial
+                    </label>
+                    <input type="date"
+                           name="minDate"
+                           id="minDate"
+                           class="form-control form-control-lg bg-dark text-light rounded-3 border-warning shadow-sm" />
+                </div>
+
+                <!-- Data Final -->
+                <div class="mb-4">
+                    <label for="maxDate"
+                           class="form-label fw-semibold text-warning">
+                        Data Final
+                    </label>
+                    <input type="date"
+                           name="maxDate"
+                           id="maxDate"
+                           class="form-control form-control-lg bg-dark text-light rounded-3 border-warning shadow-sm" />
+                </div>
+
+                <!-- Botão -->
+                <button type="submit"
+                        class="btn btn-outline-warning btn-lg w-100 rounded-3 shadow-sm fw-semibold">
+                    <i class="bi bi-graph-up-arrow me-1"></i>
+                    Gerar Relatório
+                </button>
+
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+

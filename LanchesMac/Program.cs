@@ -1,3 +1,4 @@
+using LanchesMac.Areas.Admin.Servicos;
 using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repositories;
@@ -44,6 +45,7 @@ builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>(); // aqui estou fazendo a injeção de dependência para o serviço de inicialização de usuários e papéis
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp)); // aqui estou adicionando o carrinho na sessão do usuário pelo Id, e o AddScoped também serve para que, ao invés de ser o AddTransient, o AddScoped funciona como uma chamada para cada requisição, e não na aplicação em si, no caso quando fizer uma requisição, o Transient lê como sendo igual porqu está na mesma aplicação, agora com o Scoped não, pois ele trata requisições como diferentes para cada sessão
+builder.Services.AddScoped<RelatorioVendaService>();
 
 // preciso dessa configuração para configurar as sessions
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
