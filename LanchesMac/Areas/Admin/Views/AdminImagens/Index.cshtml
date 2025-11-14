@@ -1,0 +1,169 @@
+﻿<style>
+    /* CONTAINER PRINCIPAL */
+    .gold-container {
+        background: #111;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #d4af37;
+        color: #f8f8f8;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+        animation: fadeIn 0.8s ease;
+    }
+
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .gold-title {
+        font-size: 26px;
+        font-weight: bold;
+        color: #d4af37;
+        text-align: center;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    }
+
+    /* GRID RESPONSIVO */
+    .gold-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    /* CARDS */
+    .gold-card {
+        background: #1a1a1a;
+        padding: 22px;
+        border-radius: 12px;
+        border: 1px solid #d4af37;
+        text-align: center;
+        color: #fff;
+        transition: 0.3s;
+        box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+    }
+
+        .gold-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+        }
+
+    /* ÍCONES SVG */
+    .gold-icon {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 15px;
+        fill: #d4af37;
+        filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));
+        transition: 0.3s;
+    }
+
+    .gold-card:hover .gold-icon {
+        transform: scale(1.08) rotate(-3deg);
+        filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7));
+    }
+
+    /* INPUT E BOTÕES */
+    .gold-input {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #d4af37;
+        background: #111;
+        color: #fff;
+        width: 100%;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+        .gold-input:hover {
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+        }
+
+    .gold-btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 12px;
+        background: transparent;
+        border: 1px solid #d4af37;
+        color: #d4af37;
+        border-radius: 8px;
+        transition: 0.4s;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .gold-btn:hover {
+            background: #d4af37;
+            color: #111;
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.7);
+        }
+
+</style>
+
+<div class="gold-container">
+    <h4 class="gold-title">Gerenciar Imagens</h4>
+
+    <div class="gold-grid">
+
+        <!-- UPLOAD -->
+        <div class="gold-card">
+            <form method="post" enctype="multipart/form-data"
+                  asp-controller="AdminImagens" asp-action="UploadFiles">
+
+                <!-- Ícone SVG Upload -->
+                <svg class="gold-icon" viewBox="0 0 24 24">
+                    <path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.34v4h4.66V9h3.34L12 2z" />
+                </svg>
+
+                <p><strong>Enviar Arquivos:</strong></p>
+                <p>(Arquivos com o mesmo nome serão sobrescritos)</p>
+
+                <input type="file" name="files" multiple class="gold-input" />
+
+                <button type="submit" class="gold-btn">Enviar Arquivo(s)</button>
+            </form>
+        </div>
+
+        <!-- VISUALIZAR -->
+        <div class="gold-card">
+            <form method="post" enctype="multipart/form-data"
+                  asp-controller="AdminImagens" asp-action="GetImagens">
+
+                <!-- Ícone SVG Visualizar -->
+                <svg class="gold-icon" viewBox="0 0 24 24">
+                    <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12
+                             c-2.76 0-5-2.24-5-5s2.24-5 5-5
+                             5 2.24 5 5-2.24 5-5 5zm0-8
+                             c-1.66 0-3 1.34-3 3s1.34 3 3 3
+                             3-1.34 3-3-1.34-3-3-3z" />
+                </svg>
+
+                <p><strong>Visualizar Imagens:</strong></p>
+
+                <button type="submit" class="gold-btn">Visualizar Arquivos</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="container mt-3">
+        @if (ViewData["Deletado"] != null)
+        {
+            <li style="color:#d4af37; list-style:none; text-align:center; margin-top:15px;">
+                @ViewData["Deletado"]
+            </li>
+        }
+    </div>
+</div>

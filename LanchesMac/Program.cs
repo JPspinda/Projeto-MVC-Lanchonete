@@ -6,6 +6,7 @@ using LanchesMac.Repositories.Interfaces;
 using LanchesMac.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
 
@@ -67,6 +68,8 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.Configure<ConfigurationImage>(builder.Configuration.GetSection("ConfigurationPastaImage")); // aqui estou configurando a seção ConfigurationImage do appsettings.json para ser injetada na aplicação
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -79,6 +82,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseStaticFiles();
 
 CriarPerfisUsuario(app); // aqui estou chamando o método para criar os papéis e usuários iniciais
 
