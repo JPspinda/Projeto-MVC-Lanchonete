@@ -52,6 +52,39 @@
                                 <i class="bi bi-graph-up-arrow me-1"></i> Relatórios
                             </a>
                         </li>
+                        <!--Gráficos-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light fw-semibold" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bar-chart-fill me-1"></i> Gráficos de Vendas
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-dark bg-dark border-secondary">
+                                <li>
+                                    <a class="dropdown-item text-light"
+                                       asp-area="Admin" asp-controller="AdminGrafico" asp-action="Index">
+                                        Vendas Anual
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item text-light"
+                                       asp-area="Admin" asp-controller="AdminGrafico"
+                                       asp-action="VendasMensal" asp-route-dias="30">
+                                        Vendas Mensal
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item text-light"
+                                       asp-area="Admin" asp-controller="AdminGrafico"
+                                       asp-action="VendasSemanal" asp-route-dias="7">
+                                        Vendas Semanal
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-light fw-semibold" asp-area="Admin" asp-controller="AdminImagens" asp-action="Index">
                                 <i class="bi bi-image me-1"></i> Imagens
@@ -68,63 +101,7 @@
         @RenderBody()
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark border-top border-secondary text-center text-md-start text-light pt-5">
-        <div class="container pb-4">
-            <div class="row gy-4">
-
-                <div class="col-md-3 col-lg-4">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">
-                        <i class="bi bi-shop me-2"></i> LanchesMac
-                    </h6>
-                    <p class="small text-secondary">
-                        Painel administrativo para gerenciamento de produtos, categorias e pedidos.
-                    </p>
-                </div>
-
-                <div class="col-md-2 col-lg-2">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">Recursos</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#" class="text-reset text-decoration-none">Lanches</a></li>
-                        <li><a href="#" class="text-reset text-decoration-none">Categorias</a></li>
-                        <li><a href="#" class="text-reset text-decoration-none">Pedidos</a></li>
-                        <li><a href="#" class="text-reset text-decoration-none">Relatórios</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-3 col-lg-3">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">Links úteis</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#" class="text-reset text-decoration-none">Configurações</a></li>
-                        <li><a href="#" class="text-reset text-decoration-none">Ajuda</a></li>
-                        <li><a href="#" class="text-reset text-decoration-none">Suporte</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 col-lg-3">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">Contato</h6>
-                    <ul class="list-unstyled small">
-                        <li><i class="bi bi-geo-alt me-2"></i> São Paulo, SP</li>
-                        <li><i class="bi bi-envelope me-2"></i> contato@lanchesmac.com</li>
-                        <li><i class="bi bi-telephone me-2"></i> +55 (11) 99999-9999</li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="border-secondary my-4" />
-
-            <div class="d-flex justify-content-center gap-3 mb-3">
-                <a href="#" class="text-reset"><i class="bi bi-facebook fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-instagram fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-linkedin fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-github fs-5"></i></a>
-            </div>
-
-            <div class="text-center small py-3 border-top border-secondary text-secondary">
-                © @DateTime.Now.Year - <span class="text-warning">LanchesMac</span>. Todos os direitos reservados.
-            </div>
-        </div>
-    </footer>
+    <partial name="_Footer" />
 
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

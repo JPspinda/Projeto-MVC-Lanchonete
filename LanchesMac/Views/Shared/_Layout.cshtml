@@ -79,73 +79,8 @@
     <main class="container my-5 flex-grow-1">
         @RenderBody()
     </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-dark border-top border-secondary text-center text-md-start text-light pt-5 mt-auto">
-        <div class="container pb-4">
-            <div class="row gy-4">
-
-                <!-- Empresa -->
-                <div class="col-md-3 col-lg-4">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">
-                        <i class="bi bi-shop me-2"></i>LanchesMac
-                    </h6>
-                    <p class="small mb-0">
-                        Seu lanche favorito entregue com rapidez e qualidade.
-                        Experimente nossos produtos e sinta o sabor!
-                    </p>
-                </div>
-
-                <!-- Produtos -->
-                <div class="col-md-2 col-lg-2">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">Produtos</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#!" class="text-reset text-decoration-none">Lanches</a></li>
-                        <li><a href="#!" class="text-reset text-decoration-none">Bebidas</a></li>
-                        <li><a href="#!" class="text-reset text-decoration-none">Sobremesas</a></li>
-                        <li><a href="#!" class="text-reset text-decoration-none">Combos</a></li>
-                    </ul>
-                </div>
-
-                <!-- Links úteis -->
-                <div class="col-md-3 col-lg-2">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">Links úteis</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#!" class="text-reset text-decoration-none">Promoções</a></li>
-                        <li><a href="#!" class="text-reset text-decoration-none">Meus Pedidos</a></li>
-                        <li><a href="#!" class="text-reset text-decoration-none">Ajuda</a></li>
-                        <li><a href="#!" class="text-reset text-decoration-none">Política de Privacidade</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contato -->
-                <div class="col-md-4 col-lg-3">
-                    <h6 class="text-uppercase fw-bold mb-3 text-warning">Contato</h6>
-                    <ul class="list-unstyled small mb-0">
-                        <li><i class="bi bi-geo-alt me-2"></i>São Paulo, SP - Brasil</li>
-                        <li><i class="bi bi-envelope me-2"></i>contato@lanchesmac.com</li>
-                        <li><i class="bi bi-telephone me-2"></i>(11) 99999-9999</li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="border-secondary my-4" />
-
-            <!-- Redes Sociais -->
-            <div class="d-flex justify-content-center gap-3 mb-3">
-                <a href="#" class="text-reset"><i class="bi bi-facebook fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-instagram fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-twitter fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-tiktok fs-5"></i></a>
-                <a href="#" class="text-reset"><i class="bi bi-github fs-5"></i></a>
-            </div>
-
-            <!-- Copyright -->
-            <div class="text-center small py-3 border-top border-secondary text-secondary">
-                © @DateTime.Now.Year — <span class="text-warning fw-semibold">LanchesMac</span>. Todos os direitos reservados.
-            </div>
-        </div>
-    </footer>
+    
+    <partial name="_Footer" />
 
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
