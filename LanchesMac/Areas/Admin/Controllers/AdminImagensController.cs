@@ -6,23 +6,23 @@ using Microsoft.Extensions.Options;
 namespace LanchesMac.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminImagensController : Controller
     {
         private readonly ConfigurationImage _myConfig;
-        private readonly IWebHostEnvironment _env; //pega informações do ambiente de hospedagem
 
-        public AdminImagensController(IOptions<ConfigurationImage> myConfig, IWebHostEnvironment env)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public AdminImagensController(IWebHostEnvironment hostingEnvironment,
+            IOptions<ConfigurationImage> myConfiguration)
         {
-            _myConfig = myConfig.Value;
-            _env = env;
+            _hostingEnvironment = hostingEnvironment;
+            _myConfig = myConfiguration.Value;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-
         public async Task<IActionResult> UploadFiles(List<IFormFile> files)
         {
             if (files == null || files.Count == 0)
@@ -39,7 +39,7 @@ namespace LanchesMac.Areas.Admin.Controllers
 
             long size = files.Sum(f => f.Length);
             var filePathsName = new List<string>();
-            var filePath = Path.Combine(_env.WebRootPath,
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath,
                    _myConfig.NomePastaImagensProdutos);
 
             foreach (var formFile in files)
@@ -65,6 +65,38 @@ namespace LanchesMac.Areas.Admin.Controllers
 
             //retorna a viewdata
             return View(ViewData);
+        }
+        public IActionResult GetImagens()
+        {
+            FileManagerModel model = new FileManagerModel();
+
+            var userImagesPath = Path.Combine(_hostingEnvironment.WebRootPath,
+                 _myConfig.NomePastaImagensProdutos);
+
+            DirectoryInfo dir = new DirectoryInfo(userImagesPath);
+            FileInfo[] files = dir.GetFiles();
+            model.PathImagesProduto = _myConfig.NomePastaImagensProdutos;
+
+            if (files.Length == 0)
+            {
+                ViewData["Erro"] = $"Nenhum arquivo encontrado na pasta {userImagesPath}";
+            }
+
+            model.Files = files;
+            return View(model);
+        }
+
+        public IActionResult Deletefile(string fname)
+        {
+            string _imagemDeleta = Path.Combine(_hostingEnvironment.WebRootPath,
+                _myConfig.NomePastaImagensProdutos + "\\", fname);
+
+            if ((System.IO.File.Exists(_imagemDeleta)))
+            {
+                System.IO.File.Delete(_imagemDeleta);
+                ViewData["Deletado"] = $"Arquivo(s) {_imagemDeleta} deletado com sucesso";
+            }
+            return View("index");
         }
     }
 }

@@ -68,7 +68,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.Configure<ConfigurationImage>(builder.Configuration.GetSection("ConfigurationPastaImage")); // aqui estou configurando a seção ConfigurationImage do appsettings.json para ser injetada na aplicação
+builder.Services.Configure<ConfigurationImage>(builder.Configuration.GetSection("ConfigurationPastaImagens")); // aqui estou configurando a seção ConfigurationImage do appsettings.json para ser injetada na aplicação
 
 var app = builder.Build();
 
