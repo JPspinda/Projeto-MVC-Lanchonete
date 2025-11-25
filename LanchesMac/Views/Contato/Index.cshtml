@@ -2,36 +2,477 @@
     ViewData["Title"] = "Contato";
 }
 
-<div class="container my-5">
-    <div class="p-5 bg-dark text-light rounded-4 shadow-lg border border-secondary">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold text-warning mb-3">
-                <i class="bi bi-chat-dots-fill me-2"></i>Queremos ouvir você
-            </h2>
-            <p class="text-secondary fs-5">
-                Tem alguma dúvida, sugestão ou feedback? Entre em contato conosco!
-            </p>
+<!---------------------------
+  Contato (single-file .cshtml)
+  - Tudo front-end: CSS e JS inline
+  - Não altera backend (mantive todas as tags asp-*)
+  - Cor destaque: dourado #d2a828
+---------------------------->
+
+<style>
+    /* Base */
+    :root {
+        --bg: #0f1114;
+        --panel: #16181b;
+        --muted: #9aa0a6;
+        --gold: #d2a828;
+        --accent: rgba(210,168,40,0.12);
+        --glass: rgba(255,255,255,0.02);
+        --card-shadow: 0 8px 26px rgba(0,0,0,0.6);
+    }
+
+    html, body {
+        background: var(--bg);
+        color: #e9eef5;
+        font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .contact-wrap {
+        max-width: 1100px;
+        margin: 2.5rem auto;
+        padding: 1rem;
+    }
+
+    .page-hero {
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.75rem;
+    }
+
+    .hero-left {
+        flex: 1;
+    }
+
+    .hero-title {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: var(--gold);
+        margin: 0 0 .5rem 0;
+        letter-spacing: 0.2px;
+        transform: translateY(0);
+        animation: fadeUp .6s ease both;
+    }
+
+    .hero-sub {
+        color: var(--muted);
+        margin: 0;
+        font-size: 1rem;
+        animation: fadeUp .6s .06s both;
+    }
+
+    .hero-illustration {
+        width: 160px;
+        height: 160px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: linear-gradient(180deg, rgba(210,168,40,0.06), transparent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--card-shadow);
+        border: 1px solid rgba(255,255,255,0.03);
+        animation: float 6s ease-in-out infinite;
+    }
+
+        .hero-illustration img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    /* Cards row */
+    .cards-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border-radius: 12px;
+        padding: 1.25rem;
+        border: 1px solid rgba(255,255,255,0.03);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+        transition: transform .25s ease, box-shadow .25s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+        }
+
+    .card-icon {
+        width: 56px;
+        height: 56px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: linear-gradient(180deg, rgba(210,168,40,0.12), rgba(210,168,40,0.06));
+        color: var(--gold);
+        font-size: 1.35rem;
+        margin-bottom: .6rem;
+        box-shadow: 0 6px 18px rgba(210,168,40,0.06) inset;
+    }
+
+    .card-title {
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 .25rem 0;
+    }
+
+    .card-desc {
+        color: var(--muted);
+        margin: 0 0 .75rem 0;
+        font-size: .95rem;
+    }
+
+    .card-cta-row {
+        display: flex;
+        gap: .75rem;
+        align-items: center;
+        margin-top: .5rem;
+    }
+
+    .btn-gold {
+        background: linear-gradient(180deg,var(--gold), #c49b1f);
+        color: #0a0a0a;
+        border: none;
+        padding: .55rem .9rem;
+        border-radius: 10px;
+        font-weight: 700;
+        box-shadow: 0 6px 18px rgba(210,168,40,0.16);
+        transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+        .btn-gold:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(210,168,40,0.22);
+        }
+
+    .btn-ghost {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.06);
+        color: var(--muted);
+        padding: .47rem .8rem;
+        border-radius: 8px;
+        transition: all .18s ease;
+    }
+
+        .btn-ghost:hover {
+            color: #fff;
+            border-color: rgba(210,168,40,0.14);
+            transform: translateY(-2px);
+        }
+
+    /* Map & quick actions */
+    .panel {
+        background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
+        border-radius: 12px;
+        padding: 1rem;
+        border: 1px solid rgba(255,255,255,0.025);
+        box-shadow: var(--card-shadow);
+    }
+
+    .map-row {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .map-embed {
+        border-radius: 10px;
+        overflow: hidden;
+        height: 100%;
+        min-height: 320px;
+        border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .quick-actions {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .btn-whatsapp {
+        background: #25D366;
+        color: white;
+        border-radius: 10px;
+        padding: .65rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        box-shadow: 0 8px 22px rgba(37,211,102,0.12);
+    }
+
+    .btn-call {
+        background: var(--gold);
+        color: #0a0a0a;
+        border-radius: 10px;
+        padding: .65rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+    }
+
+    /* Footer small note */
+    .info-note {
+        color: var(--muted);
+        font-size: .92rem;
+        margin-top: .6rem;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .cards-row
+
+    {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .map-row {
+        grid-template-columns: 1fr;
+    }
+
+    }
+    @@media (max-width: 576px) {
+        .cards-row
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-illustration {
+        display: none;
+    }
+
+    }
+
+    /* Animations */
+    @@keyframes float {
+        0%
+
+    {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+    }
+    @@keyframes fadeUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* small table/list style for address / phone lists */
+    .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: var(--muted);
+    }
+
+        .contact-list li {
+            padding: .45rem 0;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+        }
+
+    /* subtle focus for inputs (if you later add a form) */
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(210,168,40,0.08);
+        border-color: rgba(210,168,40,0.2);
+    }
+</style>
+
+<div class="contact-wrap">
+
+    <!-- HERO -->
+    <div class="page-hero">
+        <div class="hero-left">
+            <h1 class="hero-title">Queremos ouvir você</h1>
+            <p class="hero-sub">Tem dúvida, sugestão ou quer conversar? Escolha o canal que preferir — nós responderemos rápido.</p>
         </div>
 
-        <div class="text-center">
-            <div class="mb-4">
-                <!-- TagHelper personalizada -->
-                <email endereco="jaopedrospinda@gmail.com" conteudo="📧 Enviar um E-mail"></email>
+        <!-- local image sent by user (developer requested using this local path as URL) -->
+        <div class="hero-illustration" title="Ilustração">
+            <img src="/mnt/data/1609e74d-69fd-49c5-a3a1-52742dbcd3ff.png" alt="Ilustração do contato" />
+        </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards-row">
+        <!-- EMAIL -->
+        <div class="contact-card">
+            <div class="card-icon">
+                <i class="bi bi-envelope-fill"></i>
+            </div>
+            <h4 class="card-title">E-mail</h4>
+            <p class="card-desc">Envie sua mensagem por e-mail — respondemos em até 24 horas.</p>
+
+            <div class="card-cta-row">
+                <!-- mantive TagHelper personalizado <email> -->
+                <email endereco="jaopedrospinda@gmail.com" conteudo="📧 Enviar E-mail"></email>
+                <a class="btn-ghost" href="mailto:jaopedrospinda@gmail.com">Abrir no cliente</a>
+            </div>
+            <p class="info-note">Dica: inclua seu telefone para retorno mais rápido.</p>
+        </div>
+
+        <!-- TELEFONE -->
+        <div class="contact-card">
+            <div class="card-icon">
+                <i class="bi bi-telephone-fill"></i>
+            </div>
+            <h4 class="card-title">Telefone</h4>
+            <p class="card-desc">Atendimento humano — disponível em horário comercial.</p>
+
+            <div class="card-cta-row">
+                <a class="btn-gold" href="tel:11999999999"><i class="bi bi-telephone me-2"></i> Ligar Agora</a>
+                <a class="btn-ghost" href="tel:11999999999">Ver número</a>
+            </div>
+            <ul class="contact-list" style="margin-top:.8rem;">
+                <li><i class="bi bi-clock me-2" style="color:var(--muted)"></i> Segunda a sexta — 8h às 18h</li>
+            </ul>
+        </div>
+
+        <!-- ENDEREÇO -->
+        <div class="contact-card">
+            <div class="card-icon">
+                <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <h4 class="card-title">Endereço</h4>
+            <p class="card-desc">Visite-nos ou use o endereço para entregas e correspondências.</p>
+
+            <div class="card-cta-row">
+                <a class="btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Av.+Juscelino+Kubitschek,+1000+São+Paulo" target="_blank" rel="noopener">Abrir no Maps</a>
             </div>
 
-            <div class="mb-3">
-                <h5 class="text-warning fw-semibold">
-                    <i class="bi bi-telephone-fill me-2"></i>(11) 99999-9999
-                </h5>
+            <address class="info-note" style="margin-top:.6rem;">
+                Av. Juscelino Kubitschek, 1000<br />
+                03492-112 — São Paulo, SP
+            </address>
+        </div>
+    </div>
+
+    <!-- MAP + QUICK ACTIONS -->
+    <div style="margin-top:1.25rem;">
+        <div class="map-row panel">
+            <!-- MAP -->
+            <div class="map-embed">
+                <!-- Replace SUA_API_KEY if you wish to use your Google Maps API; URL works without API in many cases via embed -->
+                <iframe loading="lazy"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        style="border:0; min-height:320px;"
+                        allowfullscreen
+                        src="https://www.google.com/maps/embed/v1/place?key=SUA_API_KEY&q=Avenida+Juscelino+Kubitschek,+1000+São+Paulo">
+                </iframe>
             </div>
 
-            <div>
-                <h6 class="text-secondary fw-normal">
-                    <i class="bi bi-geo-alt-fill me-2"></i>
-                    Av. Juscelino Kubitschek, 1000<br />
-                    03492-112 — São Paulo, SP
-                </h6>
+            <!-- QUICK ACTIONS -->
+            <div class="quick-actions">
+                <div class="panel" style="background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));">
+                    <h5 style="margin:0 0 .5rem 0; color:var(--gold);">Contato Rápido</h5>
+                    <p class="card-desc" style="margin-bottom:1rem;">Atendimento instantâneo via WhatsApp ou ligação.</p>
+
+                    <a class="btn-whatsapp" href="https://wa.me/5511999999999" target="_blank" rel="noopener">
+                        <i class="bi bi-whatsapp fs-5"></i> &nbsp; Conversar pelo WhatsApp
+                    </a>
+
+                    <a class="btn-call" href="tel:11999999999" style="margin-top:.5rem;">
+                        <i class="bi bi-telephone-fill fs-5"></i> &nbsp; Ligar Agora
+                    </a>
+
+                    <p class="info-note">Clique em "Conversar" para abrir o WhatsApp Web/APP. Ligue diretamente pelo celular.</p>
+                </div>
+
+                <div class="panel" style="display:flex; gap:.6rem; align-items:center; justify-content:space-between;">
+                    <div>
+                        <h6 style="margin:0; color:var(--gold);">Horário de atendimento</h6>
+                        <small class="contact-desc" style="color:var(--muted);">Seg — Sex · 08:00 — 18:00</small>
+                    </div>
+                    <div>
+                        <a class="btn-ghost" href="@Url.Action("Index", "Home")">Voltar à Home</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
+
+<!-- JS: animações leves e melhorias de UX -->
+<script>
+    (function(){
+        // small: add fade-in on scroll for panels (intersection observer)
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if(e.isIntersecting){
+                    e.target.style.opacity = 1;
+                    e.target.style.transform = 'translateY(0)';
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.contact-card, .panel, .hero-illustration').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(8px)';
+            el.style.transition = 'opacity .6s ease, transform .6s ease';
+            io.observe(el);
+        });
+
+        // tiny UX: smooth scroll for map links (if needed)
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{
+            a.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                const id = a.getAttribute('href').substring(1);
+                const target = document.getElementById(id);
+                if(target) target.scrollIntoView({behavior:'smooth', block:'center'});
+            });
+        });
+
+        // mobile: ensure iframe is resized properly on orientation change
+        window.addEventListener('orientationchange', () => {
+            document.querySelectorAll('.map-embed iframe').forEach(iframe => {
+                // trigger redraw
+                iframe.style.display = 'none';
+                setTimeout(()=> iframe.style.display = 'block', 60);
+            });
+        });
+    })();
+</script>

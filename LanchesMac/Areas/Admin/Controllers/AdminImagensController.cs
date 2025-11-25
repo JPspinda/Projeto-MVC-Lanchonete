@@ -23,6 +23,7 @@ namespace LanchesMac.Areas.Admin.Controllers
         {
             return View();
         }
+
         public async Task<IActionResult> UploadFiles(List<IFormFile> files)
         {
             if (files == null || files.Count == 0)
