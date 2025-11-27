@@ -71,6 +71,9 @@ namespace LanchesMac.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? PedidoEntregueEm { get; set; }
 
+        [Display(Name = "Pedido entregue")]
+        public bool Entregue { get; set; } = false;
+
         public List<PedidoDetalhe> PedidoItens { get; set; }
     }
 }

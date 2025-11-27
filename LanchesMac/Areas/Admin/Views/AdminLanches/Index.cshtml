@@ -128,4 +128,53 @@
     .card-footer .btn:hover {
         transform: scale(1.15);
     }
+
+    /* ---------- PAGINAÇÃO CUSTOMIZADA (ReflectionIT Pager) ---------- */
+
+    .pagination {
+        display: flex;
+        gap: 6px;
+        justify-content: center;
+    }
+
+    .page-item {
+        transition: 0.25s ease;
+    }
+
+        .page-item .page-link {
+            background: #121212;
+            border: 1px solid #c89d1b;
+            color: #e7c15a;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: 0.25s ease;
+        }
+
+            .page-item .page-link:hover {
+                background: #c89d1b;
+                color: #111;
+                box-shadow: 0 0 14px rgba(200, 157, 27, 0.7);
+            }
+
+        /* Página selecionada */
+        .page-item.active .page-link {
+            background: #c89d1b;
+            border-color: #c89d1b;
+            color: #111;
+            box-shadow: 0 0 14px rgba(200, 157, 27, 0.8);
+            font-weight: 700;
+        }
+
+        /* Desabilitado */
+        .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+    /* Setas anteriores/próximas */
+    .page-link i {
+        font-size: 0.9rem;
+    }
+
 </style>
