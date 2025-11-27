@@ -40,10 +40,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.AddHttpClient<CepService>();
+
 //fazendo a injeção de dependências
 builder.Services.AddTransient<ILanchesRepository, LancheRepository>(); // aqui serve para fazer a injeção de dependência automaticamente no projeto, podemos injetar assim as dependências nos controllers
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddTransient<ICepService, CepService>(); // aqui estou fazendo a injeção de dependência para o serviço de consulta de CEP
 builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>(); // aqui estou fazendo a injeção de dependência para o serviço de inicialização de usuários e papéis
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp)); // aqui estou adicionando o carrinho na sessão do usuário pelo Id, e o AddScoped também serve para que, ao invés de ser o AddTransient, o AddScoped funciona como uma chamada para cada requisição, e não na aplicação em si, no caso quando fizer uma requisição, o Transient lê como sendo igual porqu está na mesma aplicação, agora com o Scoped não, pois ele trata requisições como diferentes para cada sessão
 builder.Services.AddScoped<RelatorioVendaService>();

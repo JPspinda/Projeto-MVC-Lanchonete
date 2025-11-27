@@ -39,7 +39,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 resultado = resultado.Where(l => l.Nome.Contains(filter));
             }
 
-            var model = await PagingList.CreateAsync(resultado, 10, pageIndex, sort, "Nome");
+            var model = await PagingList.CreateAsync(resultado, 9, pageIndex, sort, "Nome");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
         }

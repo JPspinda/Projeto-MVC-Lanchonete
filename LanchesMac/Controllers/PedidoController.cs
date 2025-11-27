@@ -1,5 +1,6 @@
 ﻿using LanchesMac.Models;
 using LanchesMac.Repositories.Interfaces;
+using LanchesMac.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +9,17 @@ namespace LanchesMac.Controllers
     public class PedidoController : Controller
     {
         private readonly IPedidoRepository _pedidoRepository;
+        private readonly ICepService _cepService;
         private readonly CarrinhoCompra _carrinhoCompra;
 
-        public PedidoController(IPedidoRepository pedidoRepository, CarrinhoCompra carrinhoCompra)
+        public PedidoController(
+            IPedidoRepository pedidoRepository, 
+            ICepService cepService,
+            CarrinhoCompra carrinhoCompra)
         {
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
+            _cepService = cepService;
         }
 
         [Authorize]
@@ -22,6 +28,15 @@ namespace LanchesMac.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> BuscarCep(string cep)
+        {
+            var retorno = await _cepService.GetCepByAPI(cep);
+            return Json(retorno);
+        }
+
 
         [Authorize]
         [HttpPost]

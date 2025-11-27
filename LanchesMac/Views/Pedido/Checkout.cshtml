@@ -5,79 +5,86 @@
 }
 
 <div class="container my-5">
-    <div class="p-5 bg-dark text-light rounded-4 shadow-lg border border-secondary">
+    <div class="p-5 bg-dark text-light rounded-4 shadow-lg border border-warning-subtle gold-glow">
+
+        <!-- Título -->
         <div class="text-center mb-4">
-            <h2 class="fw-bold text-warning">
+            <h2 class="fw-bold text-warning display-6">
                 <i class="bi bi-bag-check-fill me-2"></i>Finalize seu Pedido
             </h2>
-            <p class="text-muted mb-0">Você está a um passo de completar o seu pedido</p>
-            <hr class="border-secondary opacity-50 w-25 mx-auto mt-3" />
+            <p class="text-secondary mb-0">Você está a um passo de completar o seu pedido</p>
+            <hr class="border-warning opacity-50 w-25 mx-auto mt-3" />
         </div>
 
         <form asp-action="Checkout" method="post" role="form">
+
             <!-- Nome e Sobrenome -->
             <div class="row g-4">
                 <div class="col-md-6">
                     <label asp-for="Nome" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Nome" class="form-control bg-dark text-light border-secondary rounded-3" />
+                    <input asp-for="Nome" class="form-control custom-input" />
                     <span asp-validation-for="Nome" class="text-danger small"></span>
                 </div>
+
                 <div class="col-md-6">
                     <label asp-for="Sobrenome" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Sobrenome" class="form-control bg-dark text-light border-secondary rounded-3" />
+                    <input asp-for="Sobrenome" class="form-control custom-input" />
                     <span asp-validation-for="Sobrenome" class="text-danger small"></span>
                 </div>
             </div>
 
-            <!-- Endereços -->
+            <!-- Endereço com CEP + Logradouro + Número -->
             <div class="row g-4 mt-2">
+                <div class="col-md-3">
+                    <label asp-for="Cep" class="form-label text-warning fw-semibold"></label>
+                    <input asp-for="Cep" id="Cep" class="form-control custom-input" />
+                    <span asp-validation-for="Cep" class="text-danger small"></span>
+                </div>
+
                 <div class="col-md-6">
                     <label asp-for="Endereco1" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Endereco1" class="form-control bg-dark text-light border-secondary rounded-3" />
+                    <input asp-for="Endereco1" id="Endereco1" class="form-control custom-input" />
                     <span asp-validation-for="Endereco1" class="text-danger small"></span>
                 </div>
-                <div class="col-md-6">
-                    <label asp-for="Endereco2" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Endereco2" class="form-control bg-dark text-light border-secondary rounded-3" />
-                    <span asp-validation-for="Endereco2" class="text-danger small"></span>
+
+                <div class="col-md-3">
+                    <label asp-for="Numero" class="form-label text-warning fw-semibold"></label>
+                    <input asp-for="Numero" id="Numero" class="form-control custom-input" />
+                    <span asp-validation-for="Numero" class="text-danger small"></span>
                 </div>
             </div>
 
-            <!-- CEP / Cidade / Estado -->
-            <div class="row g-4 mt-2">
-                <div class="col-md-4">
-                    <label asp-for="Cep" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Cep" class="form-control bg-dark text-light border-secondary rounded-3" />
-                    <span asp-validation-for="Cep" class="text-danger small"></span>
-                </div>
-                <div class="col-md-4">
+            <!-- Cidade + Estado -->
+            <div class="row g-4 mt-1">
+                <div class="col-md-8">
                     <label asp-for="Cidade" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Cidade" class="form-control bg-dark text-light border-secondary rounded-3" />
-                    <span asp-validation-for="Cidade" class="text-danger small"></span>
+                    <input asp-for="Cidade" id="Cidade" class="form-control custom-input" />
                 </div>
+
                 <div class="col-md-4">
                     <label asp-for="Estado" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Estado" class="form-control bg-dark text-light border-secondary rounded-3" />
-                    <span asp-validation-for="Estado" class="text-danger small"></span>
+                    <input asp-for="Estado" id="Estado" class="form-control custom-input" />
                 </div>
             </div>
 
             <!-- Contato -->
-            <div class="row g-4 mt-2">
+            <div class="row g-4 mt-3">
                 <div class="col-md-6">
                     <label asp-for="Telefone" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Telefone" class="form-control bg-dark text-light border-secondary rounded-3" />
+                    <input asp-for="Telefone" class="form-control custom-input" />
                     <span asp-validation-for="Telefone" class="text-danger small"></span>
                 </div>
+
                 <div class="col-md-6">
                     <label asp-for="Email" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Email" class="form-control bg-dark text-light border-secondary rounded-3" />
+                    <input asp-for="Email" class="form-control custom-input" />
                     <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
             </div>
 
             <!-- Botões -->
             <div class="d-flex justify-content-end gap-3 mt-5">
+
                 <a asp-controller="CarrinhoCompra"
                    asp-action="Index"
                    class="btn btn-outline-warning btn-lg fw-semibold rounded-pill shadow-sm px-4">
@@ -85,10 +92,57 @@
                 </a>
 
                 <button type="submit"
-                        class="btn btn-success btn-lg fw-semibold rounded-pill shadow-sm px-4">
+                        class="btn btn-warning btn-lg fw-semibold rounded-pill shadow-sm px-4 text-dark">
                     <i class="bi bi-bag-check-fill me-2"></i> Concluir Pedido
                 </button>
+
             </div>
         </form>
     </div>
 </div>
+
+<!-- CEP Auto-preenchimento -->
+<script>
+    document.getElementById("Cep").addEventListener("change", function () {
+        let cep = this.value.replace(/\D/g, '');
+
+        if (cep.length !== 8) return;
+
+        fetch(`/Pedido/BuscarCep?cep=${cep}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.erro || data.Message) {
+                    alert("CEP não encontrado.");
+                    return;
+                }
+
+                document.getElementById("Endereco1").value = data.logradouro || "";
+                document.getElementById("Cidade").value = data.localidade || "";
+                document.getElementById("Estado").value = data.uf || "";
+            })
+            .catch(() => alert("Erro ao buscar o CEP."));
+    });
+</script>
+
+<!-- Estilo personalizado -->
+<style>
+    .custom-input {
+        background: #1b1b1b !important;
+        color: #f1f1f1 !important;
+        border: 1px solid #7a6029 !important;
+        border-radius: 12px;
+        padding: 12px 14px;
+        transition: 0.3s;
+    }
+
+        .custom-input:focus {
+            border-color: #d4a63a !important;
+            box-shadow: 0 0 10px rgba(212, 166, 58, 0.5) !important;
+            background: #222 !important;
+        }
+
+    .gold-glow {
+        box-shadow: 0 0 18px rgba(255, 193, 7, 0.25) !important;
+        border: 1px solid rgba(255, 193, 7, 0.35) !important;
+    }
+</style>

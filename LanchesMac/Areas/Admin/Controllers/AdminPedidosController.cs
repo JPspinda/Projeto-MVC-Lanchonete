@@ -56,7 +56,7 @@ namespace LanchesMac.Areas.Admin.Controllers
                 resultado = resultado.Where(p => p.Nome.Contains(filter)); // aqui é como funciona a pesquisa
             }
 
-            var model = await PagingList.CreateAsync(resultado, 10, pageindex, sort, "Nome");
+            var model = await PagingList.CreateAsync(resultado, 9, pageindex, sort, "Nome");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } }; // usar "filter" minúsculo
 
             return View(model);
@@ -171,6 +171,23 @@ namespace LanchesMac.Areas.Admin.Controllers
             return View(pedido);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ConfirmarEntregaDoPedido(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pedido = await _context.Pedidos.FindAsync(id);
+
+            pedido.PedidoEntregueEm = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // POST: Admin/AdminPedidos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -190,5 +207,6 @@ namespace LanchesMac.Areas.Admin.Controllers
         {
             return _context.Pedidos.Any(e => e.PedidoId == id);
         }
+
     }
 }

@@ -4,60 +4,146 @@
     ViewData["Title"] = "Detalhes do Pedido";
 }
 
-<section class="bg-dark text-light py-5 min-vh-100">
+<style>
+    /* ======== ESTILOS GERAIS ======== */
+    body {
+        background-color: #0f0f0f;
+        color: #eaeaea;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .text-gold {
+        color: #d4af37 !important;
+    }
+
+    .border-gold {
+        border-color: #d4af37 !important;
+    }
+
+    .bg-dark-gradient {
+        background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+    }
+
+    .section-shadow {
+        box-shadow: 0 0 25px rgba(0,0,0,0.7);
+    }
+
+    hr.custom-line {
+        border: 0;
+        border-top: 2px solid #444;
+        width: 30%;
+        margin: 10px auto 25px;
+    }
+
+    /* ======== BLOCO DE INFORMAÇÕES ======== */
+    .info-box {
+        background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+        border: 1px solid #333;
+        border-radius: 15px;
+        padding: 25px;
+        transition: 0.3s;
+    }
+
+        .info-box:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212,175,55,0.3);
+        }
+
+    dt {
+        color: #c2c2c2;
+    }
+
+    dd {
+        color: #fff;
+    }
+
+    /* ======== BOTÕES ======== */
+    .btn-custom {
+        padding: 0.8rem 2.2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-gold-outline {
+        border: 2px solid #d4af37;
+        color: #d4af37;
+    }
+
+        .btn-gold-outline:hover {
+            background-color: #d4af37;
+            color: #000;
+        }
+
+    .btn-green {
+        background-color: #1f8f4c;
+        border: 2px solid #1f8f4c;
+        color: #fff;
+    }
+
+        .btn-green:hover {
+            background-color: #27b45e;
+            border-color: #27b45e;
+        }
+</style>
+
+<section class="py-5 min-vh-100">
     <div class="container">
+
         <!-- Cabeçalho -->
         <div class="text-center mb-5">
-            <h2 class="fw-bold text-warning">
+            <h2 class="fw-bold text-gold">
                 <i class="bi bi-receipt me-2"></i>Detalhes do Pedido
             </h2>
-            <hr class="border-secondary opacity-50 w-25 mx-auto" />
+            <hr class="custom-line" />
         </div>
 
         <!-- Informações do Cliente -->
-        <div class="bg-gradient border border-secondary rounded-4 shadow-lg p-4 mb-4">
-            <h4 class="text-warning mb-3">
+        <div class="info-box mb-4">
+            <h4 class="text-gold mb-3">
                 <i class="bi bi-person-vcard me-2"></i>Informações do Cliente
             </h4>
             <hr class="border-secondary" />
+
             <dl class="row">
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Nome)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Nome)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Nome)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Sobrenome)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Sobrenome)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Sobrenome)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Endereco1)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Endereco1)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Endereco1)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Endereco2)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Endereco2)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Endereco2)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Cep)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Cep)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Cep)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Estado)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Estado)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Estado)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Cidade)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Cidade)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Cidade)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Telefone)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Telefone)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Telefone)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.Email)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Email)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.PedidoEnviado)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.PedidoEnviado)</dt>
                 <dd class="col-sm-9">
                     <span class="text-info">@Model.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</span>
                 </dd>
 
-                <dt class="col-sm-3 fw-bold text-secondary">@Html.DisplayNameFor(model => model.PedidoEntregueEm)</dt>
+                <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.PedidoEntregueEm)</dt>
                 <dd class="col-sm-9">
                     @if (Model.PedidoEntregueEm == null)
                     {
-                        <span class="text-warning">Aguardando entrega</span>
+                        <span class="text-gold">Aguardando entrega</span>
                     }
                     else
                     {
@@ -70,14 +156,15 @@
         <!-- Botões -->
         <div class="d-flex justify-content-between mt-4">
             <a asp-action="Index"
-               class="btn btn-outline-warning btn-lg fw-semibold rounded-pill px-4 shadow-sm">
+               class="btn btn-custom btn-gold-outline shadow-sm">
                 <i class="bi bi-arrow-left-circle me-2"></i> Voltar à Lista
             </a>
 
             <a asp-action="Edit" asp-route-id="@Model?.PedidoId"
-               class="btn btn-success btn-lg fw-semibold rounded-pill px-4 shadow-sm">
+               class="btn btn-custom btn-green shadow-sm">
                 <i class="bi bi-pencil-square me-2"></i> Editar Pedido
             </a>
         </div>
+
     </div>
 </section>

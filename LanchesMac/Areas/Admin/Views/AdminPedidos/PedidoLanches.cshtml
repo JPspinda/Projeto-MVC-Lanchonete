@@ -5,83 +5,160 @@
     decimal pedidoTotal = 0;
 }
 
-<section class="bg-dark text-light py-5 min-vh-100">
+<style>
+    body {
+        background-color: #0f0f0f;
+        color: #eaeaea;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .text-gold {
+        color: #d4af37 !important;
+    }
+
+    .border-gold {
+        border-color: #d4af37 !important;
+    }
+
+    .card-premium {
+        background: linear-gradient(135deg, #111, #1b1b1b);
+        border: 1px solid #333;
+        border-radius: 18px;
+        transition: 0.3s;
+        box-shadow: 0 0 25px rgba(0,0,0,0.5);
+        padding: 20px;
+    }
+
+        .card-premium:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 18px rgba(212,175,55,0.25);
+        }
+
+    .thumb-card {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 14px;
+        box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    }
+
+    .btn-gold-outline {
+        border: 2px solid #d4af37;
+        color: #d4af37;
+        border-radius: 50px;
+        padding: 10px 30px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .btn-gold-outline:hover {
+            background-color: #d4af37;
+            color: #000;
+        }
+
+    .info-box {
+        background: linear-gradient(135deg, #111, #1a1a1a);
+        border: 1px solid #333;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.4);
+        transition: .3s;
+    }
+
+        .info-box:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 18px rgba(212,175,55,.25);
+        }
+
+</style>
+
+<section class="py-5 min-vh-100">
     <div class="container">
-        <!-- Cabeçalho do Pedido -->
-        <div class="mb-5 text-center">
-            <h2 class="fw-bold text-warning mb-2">
+
+        <!-- Cabeçalho -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-gold">
                 <i class="bi bi-receipt-cutoff me-2"></i>Detalhes do Pedido
             </h2>
             <hr class="border-secondary opacity-50 w-25 mx-auto" />
         </div>
 
         <!-- Informações do Pedido -->
-        <div class="row g-4 bg-gradient p-4 rounded-4 border border-secondary shadow-sm mb-5">
-            <div class="col-md-3">
-                <p class="mb-1 text-muted">Número do Pedido</p>
-                <p class="fw-semibold fs-5 text-warning">#@Model.Pedido.PedidoId</p>
-            </div>
-            <div class="col-md-3">
-                <p class="mb-1 text-muted">Cliente</p>
-                <p class="fw-semibold">@Model.Pedido.Nome</p>
-            </div>
-            <div class="col-md-3">
-                <p class="mb-1 text-muted">Data do Pedido</p>
-                <p>@Model.Pedido.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</p>
-            </div>
-            <div class="col-md-3">
-                <p class="mb-1 text-muted">Entrega Prevista</p>
-                <p>@(Model.Pedido.PedidoEntregueEm?.ToString("dd/MM/yyyy HH:mm") ?? "—")</p>
+        <div class="info-box mb-5">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <p class="text-muted mb-1">Número do Pedido</p>
+                    <p class="fw-bold text-gold fs-5">#@Model.Pedido.PedidoId</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="text-muted mb-1">Cliente</p>
+                    <p class="fw-semibold">@Model.Pedido.Nome</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="text-muted mb-1">Data do Pedido</p>
+                    <p>@Model.Pedido.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="text-muted mb-1">Entrega Prevista</p>
+                    <p>@(Model.Pedido.PedidoEntregueEm?.ToString("dd/MM/yyyy HH:mm") ?? "—")</p>
+                </div>
             </div>
         </div>
 
-        <!-- Tabela dos Itens -->
-        <div class="table-responsive rounded-4 shadow-lg border border-secondary">
-            <table class="table table-dark table-striped align-middle mb-0">
-                <thead class="table-warning text-dark">
-                    <tr>
-                        <th>Nome do Lanche</th>
-                        <th class="text-center">Imagem</th>
-                        <th class="text-end">Preço</th>
-                        <th class="text-end">Quantidade</th>
-                        <th class="text-end">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Pedido.PedidoItens)
-                    {
-                        var subtotal = item.Lanche.Preco * item.Quantidade;
-                        pedidoTotal += subtotal;
+        <!-- CARDS DOS LANCHES -->
+        <div class="row g-4">
+            @foreach (var item in Model.Pedido.PedidoItens)
+            {
+                var subtotal = item.Lanche.Preco * item.Quantidade;
+                pedidoTotal += subtotal;
 
-                        <tr>
-                            <td class="fw-semibold">@item.Lanche.Nome</td>
-                            <td class="text-center">
-                                <img src="@item.Lanche.ImagemUrl"
-                                     alt="@item.Lanche.Nome"
-                                     class="img-thumbnail rounded-3 shadow-sm"
-                                     style="width: 90px; height: 90px; object-fit: cover;" />
-                            </td>
-                            <td class="text-end text-success fw-semibold">@item.Lanche.Preco.ToString("C")</td>
-                            <td class="text-end fw-semibold">@item.Quantidade</td>
-                            <td class="text-end fw-bold text-success">@subtotal.ToString("C")</td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot class="border-top border-warning">
-                    <tr>
-                        <td colspan="4" class="text-end fw-bold text-warning">Total do Pedido:</td>
-                        <td class="text-end fw-bold text-warning">@pedidoTotal.ToString("C")</td>
-                    </tr>
-                </tfoot>
-            </table>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card-premium h-100">
+
+                        <!-- Imagem -->
+                        <img src="@item.Lanche.ImagemUrl"
+                             alt="@item.Lanche.Nome"
+                             class="thumb-card mb-3" />
+
+                        <!-- Nome -->
+                        <h5 class="fw-bold text-gold mb-2">@item.Lanche.Nome</h5>
+
+                        <!-- Preço -->
+                        <p class="m-0">
+                            <span class="text-muted">Preço:</span>
+                            <span class="text-success fw-semibold">@item.Lanche.Preco.ToString("C")</span>
+                        </p>
+
+                        <!-- Quantidade -->
+                        <p class="m-0">
+                            <span class="text-muted">Quantidade:</span>
+                            <span class="fw-semibold">@item.Quantidade</span>
+                        </p>
+
+                        <!-- Subtotal -->
+                        <p class="mt-2 fw-bold text-success">
+                            Subtotal: @subtotal.ToString("C")
+                        </p>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Total do Pedido -->
+        <div class="text-end mt-5">
+            <h3 class="fw-bold text-gold">Total: @pedidoTotal.ToString("C")</h3>
         </div>
 
         <!-- Botão Voltar -->
-        <div class="text-end mt-5">
-            <a asp-action="Index"
-               class="btn btn-outline-warning btn-lg fw-semibold rounded-pill shadow-sm px-4">
+        <div class="text-end mt-4">
+            <a asp-action="Index" class="btn btn-gold-outline shadow-sm">
                 <i class="bi bi-arrow-left-circle me-2"></i> Voltar aos Pedidos
             </a>
         </div>
+
     </div>
 </section>
