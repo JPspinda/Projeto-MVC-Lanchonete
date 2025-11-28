@@ -1,4 +1,5 @@
-﻿using LanchesMac.ViewModels;
+﻿using LanchesMac.Models;
+using LanchesMac.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,7 +62,7 @@ namespace LanchesMac.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = registroVM.UserName };
+                var user = new Usuarios { UserName = registroVM.UserName, Endereco = "fausta zanqueta beluzzo" };
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
 
                 if (result.Succeeded)

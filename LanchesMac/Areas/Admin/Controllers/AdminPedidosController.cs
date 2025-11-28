@@ -53,7 +53,7 @@ namespace LanchesMac.Areas.Admin.Controllers
 
             if (!string.IsNullOrWhiteSpace(filter))
             {
-                resultado = resultado.Where(p => p.Nome.Contains(filter)); // aqui é como funciona a pesquisa
+                resultado = resultado.Where(p => p.Nome.Contains(filter) || p.Sobrenome.Contains(filter)); // aqui é como funciona a pesquisa
             }
 
             if (!pendente)

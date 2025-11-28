@@ -6,58 +6,69 @@
 
 <section class="bg-dark text-light py-5 min-vh-100">
     <div class="container">
+
         <!-- Cabeçalho -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <h2 class="fw-bold text-warning mb-3 mb-md-0">
                 <i class="bi bi-tags-fill me-2"></i> Gerenciar Categorias
             </h2>
-            <a asp-action="Create" class="btn btn-success fw-semibold shadow-sm px-4 py-2 rounded-pill">
+
+            <a asp-action="Create"
+               class="btn btn-warning fw-semibold shadow-sm px-4 py-2 rounded-pill text-dark">
                 <i class="bi bi-plus-circle me-2"></i>Nova Categoria
             </a>
         </div>
 
-        <!-- Tabela -->
-        <div class="table-responsive rounded-4 shadow-lg overflow-hidden">
-            <table class="table table-dark table-striped table-hover align-middle mb-0">
-                <thead class="bg-warning text-dark fw-semibold">
-                    <tr>
-                        <th class="ps-4">@Html.DisplayNameFor(model => model.categoriaNome)</th>
-                        <th>@Html.DisplayNameFor(model => model.Descricao)</th>
-                        <th class="text-center" style="width: 220px;">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="ps-4">@Html.DisplayFor(modelItem => item.categoriaNome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
-                            <td class="text-center">
-                                <div class="btn-group" role="group">
-                                    <a asp-action="Edit"
-                                       asp-route-id="@item.CategoriaId"
-                                       class="btn btn-outline-warning btn-sm">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a asp-action="Details"
-                                       asp-route-id="@item.CategoriaId"
-                                       class="btn btn-outline-info btn-sm">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a asp-action="Delete"
-                                       asp-route-id="@item.CategoriaId"
-                                       class="btn btn-outline-danger btn-sm">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+
+        <!-- Cards de Categorias -->
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card categoria-card h-100 text-light">
+
+                        <div class="card-body">
+                            <h4 class="card-title text-warning fw-bold">
+                                @item.categoriaNome
+                            </h4>
+
+                            <p class="card-text opacity-75">
+                                @item.Descricao
+                            </p>
+                        </div>
+
+                        <!-- Ações -->
+                        <div class="card-footer bg-transparent border-0 text-center pb-3">
+                            <div class="d-flex justify-content-center flex-wrap gap-2">
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.CategoriaId"
+                                   class="btn btn-icon btn-edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.CategoriaId"
+                                   class="btn btn-icon btn-details">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.CategoriaId"
+                                   class="btn btn-icon btn-delete">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
         </div>
 
-        <!-- Rodapé / Voltar -->
+
+        <!-- Rodapé -->
         <div class="text-center mt-5">
             <a asp-area=""
                asp-controller="Home"
@@ -66,28 +77,73 @@
                 <i class="bi bi-arrow-left-circle me-2"></i>Voltar à Home
             </a>
         </div>
+
     </div>
 </section>
 
 <style>
-    .table-dark th,
-    .table-dark td {
-        vertical-align: middle;
+    /* Card padrão */
+    .categoria-card {
+        background: #111;
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        border-radius: 18px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.05);
     }
 
-    .btn-group .btn {
-        transition: all 0.2s ease-in-out;
-    }
-
-        .btn-group .btn:hover {
-            transform: translateY(-2px);
+        .categoria-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
         }
 
-    .table-striped > tbody > tr:nth-of-type(odd) {
-        background-color: rgba(255, 255, 255, 0.05);
+    /* ----------- Botões ----------- */
+    .btn-icon {
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.15rem;
+        transition: 0.25s;
+        font-weight: 600;
     }
 
-    .table-striped > tbody > tr:hover {
-        background-color: rgba(255, 193, 7, 0.1);
+    /* Botão Detalhes (Azul) */
+    .btn-details {
+        border: 1px solid #0dcaf0;
+        color: #0dcaf0;
     }
+
+        .btn-details:hover {
+            background: #0dcaf0;
+            color: #000;
+            box-shadow: 0 0 12px rgba(13, 202, 240, 0.55);
+        }
+
+    /* Botão Editar (Dourado) */
+    .btn-edit {
+        border: 1px solid #e5b940;
+        color: #e5b940;
+    }
+
+        .btn-edit:hover {
+            background: #e5b940;
+            color: #000;
+            box-shadow: 0 0 12px rgba(229, 185, 64, 0.6);
+        }
+
+    /* Botão Excluir (Vermelho) */
+    .btn-delete {
+        border: 1px solid #d9534f;
+        color: #d9534f;
+    }
+
+        .btn-delete:hover {
+            background: #d9534f;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(217, 83, 79, 0.6);
+        }
+
 </style>

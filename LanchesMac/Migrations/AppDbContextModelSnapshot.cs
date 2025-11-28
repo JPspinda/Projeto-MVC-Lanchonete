@@ -44,7 +44,7 @@ namespace LanchesMac.Migrations
 
                     b.HasIndex("lancheId");
 
-                    b.ToTable("CarrinhoCompraItem");
+                    b.ToTable("CarrinhoCompraItem", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.Categoria", b =>
@@ -67,7 +67,7 @@ namespace LanchesMac.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.Lanche", b =>
@@ -117,7 +117,7 @@ namespace LanchesMac.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Lanches");
+                    b.ToTable("Lanches", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.Pedido", b =>
@@ -192,7 +192,7 @@ namespace LanchesMac.Migrations
 
                     b.HasKey("PedidoId");
 
-                    b.ToTable("Pedidos");
+                    b.ToTable("Pedidos", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.PedidoDetalhe", b =>
@@ -221,7 +221,7 @@ namespace LanchesMac.Migrations
 
                     b.HasIndex("PedidoId");
 
-                    b.ToTable("PedidoDetalhes");
+                    b.ToTable("PedidoDetalhes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

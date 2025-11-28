@@ -76,25 +76,26 @@
 
                         <!-- Botões -->
                         <div class="card-footer bg-transparent border-0 text-center pb-3">
-                            <div class="btn-group" role="group">
+                            <div class="d-flex justify-content-center flex-wrap gap-2">
 
                                 <a asp-action="Edit" asp-route-id="@item.lancheId"
-                                   class="btn btn-outline-warning btn-sm mx-1" title="Editar">
+                                   class="btn btn-icon btn-edit" title="Editar">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
                                 <a asp-action="Details" asp-route-id="@item.lancheId"
-                                   class="btn btn-outline-info btn-sm mx-1" title="Detalhes">
+                                   class="btn btn-icon btn-details" title="Detalhes">
                                     <i class="bi bi-eye"></i>
                                 </a>
 
                                 <a asp-action="Delete" asp-route-id="@item.lancheId"
-                                   class="btn btn-outline-danger btn-sm mx-1" title="Excluir">
+                                   class="btn btn-icon btn-delete" title="Excluir">
                                     <i class="bi bi-trash"></i>
                                 </a>
 
                             </div>
                         </div>
+
 
                     </div>
                 </div>
@@ -176,5 +177,56 @@
     .page-link i {
         font-size: 0.9rem;
     }
+
+    /* ----------- Botões Modernos (iguais aos da página de pedidos) ----------- */
+    .btn-icon {
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.15rem;
+        transition: 0.25s;
+        font-weight: 600;
+    }
+
+    /* Botão Detalhes (Azul neon) */
+    .btn-details {
+        border: 1px solid #0dcaf0;
+        color: #0dcaf0;
+    }
+
+        .btn-details:hover {
+            background: #0dcaf0;
+            color: #000;
+            box-shadow: 0 0 12px rgba(13, 202, 240, 0.55);
+        }
+
+    /* Botão Editar (Dourado) */
+    .btn-edit {
+        border: 1px solid #e5b940;
+        color: #e5b940;
+    }
+
+        .btn-edit:hover {
+            background: #e5b940;
+            color: #000;
+            box-shadow: 0 0 12px rgba(229, 185, 64, 0.6);
+        }
+
+    /* Botão Excluir (Vermelho) */
+    .btn-delete {
+        border: 1px solid #d9534f;
+        color: #d9534f;
+    }
+
+        .btn-delete:hover {
+            background: #d9534f;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(217, 83, 79, 0.6);
+        }
+
 
 </style>
