@@ -7,7 +7,7 @@ using System.Security.Principal;
 
 namespace LanchesMac.Context
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : IdentityDbContext<Usuarios>
     {
         public AppDbContext(DbContextOptions options) : base(options) { }
 
@@ -16,6 +16,8 @@ namespace LanchesMac.Context
         public DbSet<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<PedidoDetalhe> PedidoDetalhes { get; set; }
-        public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Usuarios> Usuarios { get; set; } // Se eu deixar esta tabela de usuário, como está herdando de
+                                                      // IdentityDbContext<IdentityUser>, dá conflito e tenho que alterar
+                                                      // as chamadas que estão como IdentityUsers para Usuários
     }
 }

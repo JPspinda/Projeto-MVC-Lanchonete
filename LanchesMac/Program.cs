@@ -25,7 +25,7 @@ builder.Services.AddPaging(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Essa configuração é para estabelecer a conexão da aplicação com o banco de dados informado no Json
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>() // aqui estou configurando o Identity para gerenciar a autenticação e autorização dos usuários
+builder.Services.AddIdentity<Usuarios, IdentityRole>() // aqui estou configurando o Identity para gerenciar a autenticação e autorização dos usuários
     .AddEntityFrameworkStores<AppDbContext>()// aqui estou dizendo que o Identity vai usar o AppDbContext para armazenar os dados dos usuários
     .AddDefaultTokenProviders();
 

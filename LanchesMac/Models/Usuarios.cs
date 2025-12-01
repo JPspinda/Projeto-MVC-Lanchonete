@@ -4,6 +4,6 @@ namespace LanchesMac.Models
 {
     public class Usuarios : IdentityUser
     {
-        public string Endereco { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

@@ -18,7 +18,12 @@ namespace LanchesMac.ViewModels
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}",
             ErrorMessage = "E-mail em formato inválido")]
-        public string Email { get; set; }
+        public string Email { get; set; } // se eu deixar esta propriedade, a validação do modelo falha ao tentar
+                                          //logar por causa da validação ModelState.IsValid no AccountController
+                                          //já que ela verifica se todos os campos da viewmodel foram preenchidos e
+                                          //neste caso não estava sendo passado nenhum email, ainda
+
+        public string? ImagePath { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LanchesMac.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace LanchesMac.Services
 {
     public class SeedUserRoleInitial : ISeedUserRoleInitial
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Usuarios> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public SeedUserRoleInitial(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public SeedUserRoleInitial(UserManager<Usuarios> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -36,7 +37,7 @@ namespace LanchesMac.Services
         {
             if (_userManager.FindByEmailAsync("usuario@localhost").Result == null)
             {
-                IdentityUser user = new IdentityUser(); // aqui estou criando um novo usuário caso ele não exista
+                Usuarios user = new Usuarios(); // aqui estou criando um novo usuário caso ele não exista
                 user.UserName = "usuario@localhost";
                 user.Email = "usuario@localhost";
                 user.NormalizedUserName = "USUARIO@LOCALHOST";
@@ -55,7 +56,7 @@ namespace LanchesMac.Services
 
             if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
             {
-                IdentityUser user = new IdentityUser(); // aqui estou criando um novo usuário caso ele não exista
+                Usuarios user = new Usuarios(); // aqui estou criando um novo usuário caso ele não exista
                 user.UserName = "admin@localhost";
                 user.Email = "admin@localhost";
                 user.NormalizedUserName = "ADMIN@LOCALHOST";

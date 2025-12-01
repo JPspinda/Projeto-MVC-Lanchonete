@@ -22,6 +22,13 @@
                         <hr class="border-warning opacity-50 w-50 mx-auto" />
                     </div>
 
+                    <div class="form-outline mb-4">
+                        <label class="form-label text-warning fw-semibold" asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
+                               placeholder="Digite seu email" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
                     <!-- Usuário -->
                     <div class="form-outline mb-4">
                         <label class="form-label text-warning fw-semibold" asp-for="UserName"></label>

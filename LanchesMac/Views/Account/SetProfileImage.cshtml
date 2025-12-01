@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Usuarios> SignInManager
+@inject UserManager<Usuarios> UserManager
+
+@{
+    string fotoPerfil = "padrao.png";
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        if (!string.IsNullOrEmpty(user.ImagePath))
+        {
+            fotoPerfil = user.ImagePath;
+        }
+    }
+}
+
+<div class="card shadow p-4 border-0"
+     style="max-width: 420px; margin: auto; background-color: #111; border-radius: 12px;">
+
+    <h4 class="mb-3 text-center" style="color: #d4af37;">Alterar Foto de Perfil</h4>
+
+    <!-- Imagem atual -->
+    <div class="text-center mb-3">
+        <img id="imgAtual"
+             src="~/fotos/@fotoPerfil"
+             class="rounded-circle"
+             style="width: 130px; height: 130px; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);" />
+        <p class="mt-2" style="color: #ccc;">Imagem atual</p>
+    </div>
+
+    <form asp-controller="Account" asp-action="SetProfileImage" method="post" enctype="multipart/form-data">
+
+        <!-- Botão de upload -->
+        <div class="mb-3 text-center">
+            <label for="fileInput"
+                   class="btn fw-semibold px-4"
+                   style="background-color: #d4af37; color: #000; border: 1px solid #000; border-radius: 6px;">
+                Escolher nova imagem
+            </label>
+
+            <input type="file" name="anexo" id="fileInput" class="d-none" accept="image/*" />
+        </div>
+
+        <!-- Preview -->
+        <div class="text-center mb-3" id="previewArea" style="display: none;">
+            <img id="previewImg"
+                 class="rounded-circle"
+                 style="width: 130px; height: 130px; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);" />
+            <p class="mt-2" style="color: #ccc;">Pré-visualização</p>
+        </div>
+
+        <!-- Botão salvar -->
+        <div class="d-grid">
+            <button type="submit"
+                    class="btn fw-semibold"
+                    style="background-color: #d4af37; color: #000; border: 1px solid #000; border-radius: 6px;">
+                Salvar nova foto
+            </button>
+        </div>
+    </form>
+
+    <!-- Botão abrir modal -->
+    <div class="text-center mt-3">
+        <button class="btn fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmDeleteModal"
+                style="color: #d4af37; border: 1px solid #d4af37; background-color: transparent; border-radius: 6px;">
+            Deletar imagem atual
+        </button>
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #111; border: 1px solid #d4af37;">
+
+            <div class="modal-header" style="border-bottom: 1px solid #333;">
+                <h5 class="modal-title" style="color: #d4af37;">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        style="filter: invert(1);"></button>
+            </div>
+
+            <div class="modal-body" style="color: #ccc;">
+                Tem certeza de que deseja remover a imagem de perfil?
+            </div>
+
+            <div class="modal-footer" style="border-top: 1px solid #333;">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        style="background-color: #333; color: #fff; border-radius: 6px;">
+                    Cancelar
+                </button>
+
+                <form asp-controller="Account" asp-action="DeleteProfileImageConfirmed" method="post">
+                    <button type="submit"
+                            class="btn fw-semibold"
+                            style="background-color: #d4af37; color: #000; border-radius: 6px;">
+                        Deletar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const previewArea = document.getElementById("previewArea");
+        const previewImg = document.getElementById("previewImg");
+
+        fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    previewImg.src = e.target.result;
+                    previewArea.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewArea.style.display = "none";
+                previewImg.src = "";
+            }
+        });
+    </script>
+}

@@ -1,32 +1,73 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<Usuarios> SignInManager
+@inject UserManager<Usuarios> UserManager
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm" method="post" class="d-flex align-items-center ms-3">
-        <button type="submit" class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-semibold shadow-sm">
-            <i class="bi bi-box-arrow-right me-2"></i>
-            Sair <span class="text-light">(@User.Identity.Name)</span>
-        </button>
-    </form>
+@{
+    string fotoPerfil = "padrao.png"; // imagem padrão
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        if (!string.IsNullOrEmpty(user.ImagePath))
+        {
+            fotoPerfil = user.ImagePath; //Usa foto cadastrada no banco
+        }
+    }
 }
-else
-{
-    <ul class="navbar-nav ms-3 d-flex flex-row gap-2">
-        <li class="nav-item">
-            <a class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-semibold shadow-sm"
-               asp-controller="Account"
-               asp-action="Login"
-               asp-route-returnUrl="@string.Format("{0}{1}", Context.Request.Path, Context.Request.QueryString)">
-                <i class="bi bi-box-arrow-in-right me-1"></i> Login
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="btn btn-warning btn-sm rounded-pill px-3 fw-semibold text-dark shadow-sm"
-               asp-controller="Account"
-               asp-action="Register">
-                <i class="bi bi-person-plus me-1"></i> Registrar
-            </a>
-        </li>
+
+<div class="dropdown ms-3">
+    <button class="btn p-0 border-0 bg-transparent"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+        <img src="~/fotos/@fotoPerfil"
+             class="rounded-circle shadow-sm border border-warning"
+             style="width: 42px; height: 42px; object-fit: cover;" />
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li>
+                <h6 class="dropdown-header">
+                    Logado como: @User.Identity.Name
+                </h6>
+            </li>
+
+            <li>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="dropdown-item p-0">
+                    <button type="submit" class="btn w-100 text-start">
+                        <i class="bi bi-box-arrow-right me-2"></i> Sair
+                    </button>
+                </form>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   asp-controller="Account"
+                   asp-action="SetProfileImage">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Imagem de perfil
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a class="dropdown-item"
+                   asp-controller="Account"
+                   asp-action="Login"
+                   asp-route-returnUrl="@string.Format("{0}{1}", Context.Request.Path, Context.Request.QueryString)">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item"
+                   asp-controller="Account"
+                   asp-action="Register">
+                    <i class="bi bi-person-plus me-2"></i> Registrar
+                </a>
+            </li>
+        }
     </ul>
-}
+</div>
