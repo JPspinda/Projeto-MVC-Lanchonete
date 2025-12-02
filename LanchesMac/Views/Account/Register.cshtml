@@ -15,7 +15,6 @@
 
                     <input type="hidden" asp-for="ReturnUrl" />
 
-                    <!-- Cabeçalho -->
                     <div class="text-center mb-4">
                         <h2 class="text-warning fw-bold">Criar Conta</h2>
                         <p class="text-light-50">Preencha os campos abaixo para começar</p>
@@ -29,15 +28,27 @@
                         <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
 
-                    <!-- Usuário -->
                     <div class="form-outline mb-4">
-                        <label class="form-label text-warning fw-semibold" asp-for="UserName"></label>
-                        <input asp-for="UserName" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
-                               placeholder="Digite seu nome de usuário" />
-                        <span asp-validation-for="UserName" class="text-danger small"></span>
+                        <label class="form-label text-warning fw-semibold" asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
+                               placeholder="Digite seu telefone" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
                     </div>
 
-                    <!-- Senha -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label text-warning fw-semibold" asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
+                               placeholder="Digite seu nome de usuário" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label text-warning fw-semibold" asp-for="Surname"></label>
+                        <input asp-for="Surname" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
+                               placeholder="Digite seu nome de usuário" />
+                        <span asp-validation-for="Surname" class="text-danger small"></span>
+                    </div>
+
                     <div class="form-outline mb-4">
                         <label class="form-label text-warning fw-semibold" asp-for="Password"></label>
                         <input asp-for="Password" class="form-control form-control-lg bg-dark text-light border-secondary focus-ring"
@@ -45,14 +56,12 @@
                         <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
 
-                    <!-- Botão -->
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-warning btn-lg w-100 fw-semibold shadow-sm transition">
                             Registrar
                         </button>
                     </div>
 
-                    <!-- Link de login -->
                     <div class="text-center mt-4">
                         <p class="text-light">
                             Já tem uma conta?
@@ -62,6 +71,13 @@
                             </a>
                         </p>
                     </div>
+
+                    @if (ViewData.ModelState["Registro"]?.Errors.Count > 0)
+                    {
+                        <div class="mt-4 p-3 rounded-3 border border-danger text-danger bg-danger bg-opacity-10 text-center">
+                            @ViewData.ModelState["Registro"].Errors[0].ErrorMessage
+                        </div>
+                    }
                 </form>
             </div>
         </div>

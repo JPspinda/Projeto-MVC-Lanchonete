@@ -19,7 +19,7 @@ namespace LanchesMac.Controllers
         private readonly AppDbContext _context;
 
         public AccountController(
-            UserManager<Usuarios> userManager, 
+            UserManager<Usuarios> userManager,
             SignInManager<Usuarios> signInManager,
             IWebHostEnvironment _env,
             AppDbContext context)
@@ -41,18 +41,18 @@ namespace LanchesMac.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
-           //if (!ModelState.IsValid) //O que isso faz, precisamente:
-                                    //•	ModelState é preenchido pelo model binding do ASP.NET e pela validação baseada em atributos de dados(DataAnnotations)
-                                    //  do LoginViewModel — por exemplo[Required], [DataType], [RegularExpression] etc.
-                                    //•	ModelState.IsValid == false indica que uma ou mais regras de validação falharam(campos faltando, formato inválido, etc).
-                                    //•	Ao retornar a View(loginVM) quando inválido você:
-                                   //•	evita executar lógica sobre dados inválidos(ex.: _userManager.FindByNameAsync),
-                                   //•	impede operações inseguras ou desperdício de recursos,
-                                   //•	permite que a view mostre mensagens de erro(via @Html.ValidationSummary() / @Html.ValidationMessageFor()),
-                                    //  oferecendo feedback ao usuário.
-           // {
-           //     return View(loginVM);
-           // }
+            //if (!ModelState.IsValid) //O que isso faz, precisamente:
+            //•	ModelState é preenchido pelo model binding do ASP.NET e pela validação baseada em atributos de dados(DataAnnotations)
+            //  do LoginViewModel — por exemplo[Required], [DataType], [RegularExpression] etc.
+            //•	ModelState.IsValid == false indica que uma ou mais regras de validação falharam(campos faltando, formato inválido, etc).
+            //•	Ao retornar a View(loginVM) quando inválido você:
+            //•	evita executar lógica sobre dados inválidos(ex.: _userManager.FindByNameAsync),
+            //•	impede operações inseguras ou desperdício de recursos,
+            //•	permite que a view mostre mensagens de erro(via @Html.ValidationSummary() / @Html.ValidationMessageFor()),
+            //  oferecendo feedback ao usuário.
+            // {
+            //     return View(loginVM);
+            // }
 
             var user = await _userManager.FindByEmailAsync(loginVM.Email);
 
@@ -69,7 +69,8 @@ namespace LanchesMac.Controllers
                 }
             }
 
-            ModelState.AddModelError("", "Falha ao realizar o login");
+            ModelState.AddModelError("Registro", "Falha ao realizar o login");
+
             return View(loginVM);
         }
 
@@ -84,7 +85,30 @@ namespace LanchesMac.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Usuarios { UserName = registroVM.UserName, Email = registroVM.Email };
+                // Gera username: primeira letra do nome + sobrenome
+                var primeiro = registroVM.Name?.Trim();
+                var sobrenome = registroVM.Surname?.Trim();
+
+                string username = "";
+
+                if (!string.IsNullOrEmpty(primeiro) && !string.IsNullOrEmpty(sobrenome))
+                {
+                    username = (primeiro[0] + sobrenome.Replace(" ", "")).ToLower();
+                }
+                else
+                {
+                    ModelState.AddModelError("Registro", "Nome e sobrenome são obrigatórios para gerar o nome de usuário.");
+                    return View(registroVM);
+                }
+
+                var user = new Usuarios
+                {
+                    UserName = username,
+                    Name = registroVM.Name,
+                    Surname = registroVM.Surname,
+                    Email = registroVM.Email,
+                    PhoneNumber = registroVM.PhoneNumber
+                };
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
 
                 if (result.Succeeded)

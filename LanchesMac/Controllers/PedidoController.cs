@@ -2,21 +2,25 @@
 using LanchesMac.Repositories.Interfaces;
 using LanchesMac.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LanchesMac.Controllers
 {
     public class PedidoController : Controller
     {
+        private readonly UserManager<Usuarios> _userManager;
         private readonly IPedidoRepository _pedidoRepository;
         private readonly ICepService _cepService;
         private readonly CarrinhoCompra _carrinhoCompra;
 
         public PedidoController(
+            UserManager<Usuarios> userManager,
             IPedidoRepository pedidoRepository, 
             ICepService cepService,
             CarrinhoCompra carrinhoCompra)
         {
+            _userManager = userManager;
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
             _cepService = cepService;
@@ -40,7 +44,7 @@ namespace LanchesMac.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Checkout(Pedido pedido)
+        public async Task<IActionResult> Checkout(Pedido pedido)
         {
             int totalItensPedido = 0;
             decimal precoTotalPedido = 0.0m;
