@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using LanchesMac.Models;
 using LanchesMac.Repositories.Interfaces;
 using LanchesMac.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace LanchesMac.Controllers
 {

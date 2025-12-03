@@ -12,14 +12,14 @@
             <h2 class="fw-bold text-warning mb-3 mb-md-0 title-glow">
                 <i class="bi bi-truck me-2"></i> Gerenciar Pedidos
             </h2>
-            <a asp-action="Create" class="btn btn-add fw-semibold px-4 py-2 shadow-sm rounded-pill">
+            <a asp-action="Create" class="btn btn-add fw-semibold px-4 py-2 shadow-sm rounded-pill" aria-label="Criar novo pedido" title="Criar novo pedido">
                 <i class="bi bi-plus-circle me-2"></i> Criar Novo Pedido
             </a>
         </div>
 
         <!-- Filtro -->
         <form method="get" class="row g-3 mb-5 filter-area">
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <input name="filter"
                        class="form-control search-input"
                        placeholder="Buscar pedidos..."
@@ -33,15 +33,15 @@
                            id="pendente"
                            name="pendente"
                            value="true"
-                           @(Convert.ToBoolean(Model.RouteValue["pendente"]) ? "checked" : "")>
+                           @(Convert.ToBoolean(Model.RouteValue["pendente"]) ? "checked" : "") aria-label="Mostrar todos">
                     <span class="slider"></span>
                 </label>
 
                 <label for="pendente" class="switch-label">Todos</label>
             </div>
 
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-search rounded-pill">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-search rounded-pill" aria-label="Buscar pedidos" title="Buscar">
                     <i class="bi bi-search me-1"></i> Buscar
                 </button>
             </div>
@@ -58,68 +58,84 @@
         </div>
 
         <!-- CARDS -->
-        <div class="row g-4">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-6 col-xl-4">
-                    <div class="card pedido-card h-100 shadow-lg rounded-4 position-relative">
+        @if (Model.TotalRecordCount == 0)
+        {
+            <div class="empty-state text-center py-5">
+                <i class="bi bi-clipboard-x display-4 text-warning"></i>
+                <h5 class="mt-3 text-light">Nenhum pedido encontrado</h5>
+                <p class="text-muted">Ajuste o filtro ou crie um novo pedido.</p>
+                <a asp-action="Create" class="btn btn-add fw-semibold px-4 py-2 shadow-sm rounded-pill" aria-label="Criar novo pedido" title="Criar novo pedido">
+                    <i class="bi bi-plus-circle me-2"></i> Criar Novo Pedido
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card pedido-card h-100 shadow-lg rounded-4 position-relative">
 
-                        <!-- Badge de status -->
-                        <span class="status-badge @(item.Entregue ? "bg-success" : "bg-warning text-dark")">
-                            @(item.Entregue ? "Entregue" : "Pendente")
-                        </span>
+                            <!-- Badge de status -->
+                            <span class="status-badge @(item.Entregue ? "bg-success" : "bg-warning text-dark")">
+                                @(item.Entregue ? "Entregue" : "Pendente")
+                            </span>
 
-                        <div class="card-body">
+                            <div class="card-body">
 
-                            <!-- Nome -->
-                            <h5 class="card-title text-warning fw-bold mb-3">
-                                <i class="bi bi-person-circle me-2"></i>@item.Nome @item.Sobrenome
-                            </h5>
+                                <!-- Nome -->
+                                <h5 class="card-title text-warning fw-bold mb-3">
+                                    <i class="bi bi-person-circle me-2"></i>@item.Nome @item.Sobrenome
+                                </h5>
 
-                            <!-- Dados -->
-                            <p class="info-line"><i class="bi bi-geo-alt-fill"></i> @item.Endereco1, Nº @item.Numero</p>
-                            <p class="info-line"><i class="bi bi-building"></i> @item.Cidade - @item.Estado</p>
-                            <p class="info-line"><i class="bi bi-envelope"></i> @item.Email</p>
-                            <p class="info-line"><i class="bi bi-telephone"></i> @item.Telefone</p>
+                                <span class="order-id">Pedido #@item.PedidoId</span>
 
-                            <hr class="divider" />
+                                <!-- Dados -->
+                                <p class="info-line"><i class="bi bi-geo-alt-fill"></i> @item.Endereco1, Nº @item.Numero</p>
+                                <p class="info-line"><i class="bi bi-building"></i> @item.Cidade - @item.Estado</p>
+                                <p class="info-line"><i class="bi bi-envelope"></i> @item.Email</p>
+                                <p class="info-line"><i class="bi bi-telephone"></i> @item.Telefone</p>
 
-                            <p class="info-line"><i class="bi bi-clock"></i> <strong>Enviado:</strong> @item.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</p>
-                            <p class="info-line"><i class="bi bi-check2-circle"></i> <strong>Entregue:</strong> @(item.PedidoEntregueEm?.ToString("dd/MM/yyyy HH:mm") ?? "-")</p>
-                        </div>
+                                <hr class="divider" />
 
-                        <!-- Botões -->
-                        <div class="card-footer bg-transparent border-0 text-center pb-3">
-
-                            <div class="d-flex justify-content-center flex-wrap gap-2">
-
-                                <a asp-action="PedidoLanches" asp-route-id="@item.PedidoId"
-                                   class="btn btn-icon btn-items">
-                                    <i class="bi bi-bag-check"></i>
-                                </a>
-
-                                <a asp-action="Delete" asp-route-id="@item.PedidoId"
-                                   class="btn btn-icon btn-delete">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-
-                                @if (!item.Entregue)
-                                {
-                                    <form asp-action="ConfirmarEntregaDoPedido"
-                                          asp-route-id="@item.PedidoId"
-                                          method="post">
-                                        <button type="submit" class="btn btn-icon btn-confirm">
-                                            <i class="bi bi-check2-circle"></i>
-                                        </button>
-                                    </form>
-                                }
+                                <p class="info-line"><i class="bi bi-clock"></i> <strong>Enviado:</strong> @item.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</p>
+                                <p class="info-line"><i class="bi bi-check2-circle"></i> <strong>Entregue:</strong> @(item.PedidoEntregueEm?.ToString("dd/MM/yyyy HH:mm") ?? "-")</p>
                             </div>
-                        </div>
 
+                            <!-- Botões -->
+                            <div class="card-footer bg-transparent border-0 text-center pb-3">
+
+                                <div class="d-flex justify-content-center flex-wrap gap-2">
+
+                                    <a asp-action="PedidoLanches" asp-route-id="@item.PedidoId"
+                                       class="btn btn-icon btn-items" aria-label="Ver itens do pedido @item.PedidoId" title="Ver itens">
+                                        <i class="bi bi-bag-check"></i>
+                                    </a>
+
+                                    <a asp-action="Delete" asp-route-id="@item.PedidoId"
+                                       class="btn btn-icon btn-delete" aria-label="Excluir pedido @item.PedidoId" title="Excluir">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                    @if (!item.Entregue)
+                                    {
+                                        <form asp-action="ConfirmarEntregaDoPedido"
+                                              asp-route-id="@item.PedidoId"
+                                              method="post">
+                                            <button type="submit" class="btn btn-icon btn-confirm" aria-label="Confirmar entrega do pedido @item.PedidoId" title="Confirmar entrega">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
 
     </div>
 </section>
@@ -147,6 +163,11 @@
         .search-input:focus {
             border-color: #e3b736;
             box-shadow: 0 0 8px rgba(227, 183, 54, 0.5);
+        }
+
+        .search-input::placeholder {
+            color: #b59a3a;
+            opacity: 0.8;
         }
 
     /* Botão buscar */
@@ -244,6 +265,11 @@
         font-weight: 600;
     }
 
+        .btn-icon:focus-visible {
+            outline: 2px solid #e7c15a;
+            outline-offset: 2px;
+        }
+
     /* Visual refinado por botão */
     .btn-details {
         border: 1px solid #0dcaf0;
@@ -299,6 +325,15 @@
             color: #fff;
             box-shadow: 0 0 15px rgb(0, 92, 255, 0.6);
         }
+
+    .order-id {
+        display: inline-block;
+        margin-top: -8px;
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+        color: #bfbfbf;
+        letter-spacing: 0.3px;
+    }
 
     /* Switch Toggle Moderno */
     .switch-toggle {
@@ -367,8 +402,10 @@
         border: 1px solid #d9b54a;
         font-weight: 600;
         padding: 6px 14px;
-        border-radius: 4px; /* QUADRADO */
+        border-radius: 4px;
         transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        min-width: 36px;
+        text-align: center;
     }
 
     /* hover */
@@ -399,6 +436,15 @@
         font-size: 0.85rem;
     }
 
+    .page-link:focus-visible {
+        outline: 2px solid #e7c15a;
+        outline-offset: 2px;
+    }
 
+    .empty-state {
+        border: 1px dashed #c89d1b;
+        border-radius: 12px;
+        background: rgba(200, 157, 27, 0.06);
+    }
 
 </style>

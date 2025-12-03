@@ -1,6 +1,5 @@
 ﻿
 using LanchesMac.Models;
-using System.Net;
 using System.Text.Json;
 
 namespace LanchesMac.Services

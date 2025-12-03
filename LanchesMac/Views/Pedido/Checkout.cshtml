@@ -17,23 +17,11 @@
         </div>
 
         <form asp-action="Checkout" method="post" role="form">
+            <input type="hidden" asp-for="Nome" />
+            <input type="hidden" asp-for="Sobrenome" />
+            <input type="hidden" asp-for="Telefone" />
+            <input type="hidden" asp-for="Email" />
 
-            <!-- Nome e Sobrenome -->
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <label asp-for="Nome" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Nome" class="form-control custom-input" />
-                    <span asp-validation-for="Nome" class="text-danger small"></span>
-                </div>
-
-                <div class="col-md-6">
-                    <label asp-for="Sobrenome" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Sobrenome" class="form-control custom-input" />
-                    <span asp-validation-for="Sobrenome" class="text-danger small"></span>
-                </div>
-            </div>
-
-            <!-- Endereço com CEP + Logradouro + Número -->
             <div class="row g-4 mt-2">
                 <div class="col-md-3">
                     <label asp-for="Cep" class="form-label text-warning fw-semibold"></label>
@@ -54,7 +42,6 @@
                 </div>
             </div>
 
-            <!-- Cidade + Estado -->
             <div class="row g-4 mt-1">
                 <div class="col-md-8">
                     <label asp-for="Cidade" class="form-label text-warning fw-semibold"></label>
@@ -67,24 +54,7 @@
                 </div>
             </div>
 
-            <!-- Contato -->
-            <div class="row g-4 mt-3">
-                <div class="col-md-6">
-                    <label asp-for="Telefone" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Telefone" class="form-control custom-input" />
-                    <span asp-validation-for="Telefone" class="text-danger small"></span>
-                </div>
-
-                <div class="col-md-6">
-                    <label asp-for="Email" class="form-label text-warning fw-semibold"></label>
-                    <input asp-for="Email" class="form-control custom-input" />
-                    <span asp-validation-for="Email" class="text-danger small"></span>
-                </div>
-            </div>
-
-            <!-- Botões -->
             <div class="d-flex justify-content-end gap-3 mt-5">
-
                 <a asp-controller="CarrinhoCompra"
                    asp-action="Index"
                    class="btn btn-outline-warning btn-lg fw-semibold rounded-pill shadow-sm px-4">
@@ -95,22 +65,33 @@
                         class="btn btn-warning btn-lg fw-semibold rounded-pill shadow-sm px-4 text-dark">
                     <i class="bi bi-bag-check-fill me-2"></i> Concluir Pedido
                 </button>
-
             </div>
         </form>
     </div>
 </div>
 
+<!-- Overlay de carregamento (inicialmente oculto) -->
+<div id="loaderOverlay" class="loader-hidden" aria-hidden="true">
+    <div class="spinner-border text-warning" role="status" style="width:4rem;height:4rem;">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+</div>
+
 <!-- CEP Auto-preenchimento -->
 <script>
-    document.getElementById("Cep").addEventListener("change", function () {
-        let cep = this.value.replace(/\D/g, '');
+    (function () {
+        const cepInput = document.getElementById("Cep");
+        const loader = document.getElementById("loaderOverlay");
 
-        if (cep.length !== 8) return;
+        if (!cepInput || !loader) return;
 
-        fetch(`/Pedido/BuscarCep?cep=${cep}`)
-            .then(res => res.json())
-            .then(data => {
+        async function buscarCep(cep) {
+            try {
+                showLoader();
+
+                const res = await fetch(`/Pedido/BuscarCep?cep=${cep}`);
+                const data = await res.json();
+
                 if (data.erro || data.Message) {
                     alert("CEP não encontrado.");
                     return;
@@ -119,9 +100,33 @@
                 document.getElementById("Endereco1").value = data.logradouro || "";
                 document.getElementById("Cidade").value = data.localidade || "";
                 document.getElementById("Estado").value = data.uf || "";
-            })
-            .catch(() => alert("Erro ao buscar o CEP."));
-    });
+            }
+            catch (e) {
+                alert("Erro ao buscar o CEP.");
+            }
+            finally {
+                hideLoader();
+            }
+        }
+
+        cepInput.addEventListener("change", function () {
+            const cep = this.value.replace(/\D/g, '');
+            if (cep.length !== 8) return;
+            buscarCep(cep);
+        });
+
+        function showLoader() {
+            loader.classList.remove('loader-hidden');
+            loader.classList.add('loader-visible');
+            loader.setAttribute('aria-hidden', 'false');
+        }
+
+        function hideLoader() {
+            loader.classList.remove('loader-visible');
+            loader.classList.add('loader-hidden');
+            loader.setAttribute('aria-hidden', 'true');
+        }
+    })();
 </script>
 
 <!-- Estilo personalizado -->
@@ -144,5 +149,28 @@
     .gold-glow {
         box-shadow: 0 0 18px rgba(255, 193, 7, 0.25) !important;
         border: 1px solid rgba(255, 193, 7, 0.35) !important;
+    }
+
+    /* Overlay: fica invisível até o JS mostrar */
+    #loaderOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(3px);
+        z-index: 9999;
+        display: none; /* estado padrão */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader-hidden {
+        display: none !important;
+    }
+
+    .loader-visible {
+        display: flex !important;
     }
 </style>

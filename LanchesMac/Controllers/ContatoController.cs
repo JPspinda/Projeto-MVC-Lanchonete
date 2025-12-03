@@ -6,7 +6,7 @@ namespace LanchesMac.Controllers
     {
         public IActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return View();
             }

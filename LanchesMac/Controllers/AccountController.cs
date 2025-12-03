@@ -3,11 +3,6 @@ using LanchesMac.Models;
 using LanchesMac.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.SqlServer.Server;
-using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Intrinsics.X86;
 
 namespace LanchesMac.Controllers
 {

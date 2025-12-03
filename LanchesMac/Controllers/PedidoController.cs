@@ -28,9 +28,19 @@ namespace LanchesMac.Controllers
 
         [Authorize]
         [HttpGet] // se eu nao colocar esse atributo, o padrão já é o Get
-        public IActionResult Checkout()
+        public async Task<IActionResult> Checkout()
         {
-            return View();
+            var usuario = await _userManager.GetUserAsync(User);
+
+            var pedido = new Pedido()
+            {
+                Nome = usuario.Name,
+                Sobrenome = usuario.Surname,
+                Telefone = usuario.PhoneNumber,
+                Email = usuario.Email
+            };
+
+            return View(pedido);
         }
 
         [Authorize]
